@@ -52,10 +52,15 @@ export function UserProvider({ children }) {
 		}
 	};
 
+	const logout = function () {
+		localStorage.removeItem(tokenKey);
+	};
+
 	const providerValue = {
 		user,
 		userIsLoading,
 		login,
+		logout,
 	};
 
 	return <UserContext.Provider value={providerValue}>{children}</UserContext.Provider>;
