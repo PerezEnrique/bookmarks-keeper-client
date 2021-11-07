@@ -1,16 +1,31 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { Container, Box, TextField, Typography, Button, Link } from "@mui/material";
+import {
+	Container,
+	Box,
+	TextField,
+	Typography,
+	Button,
+	Alert,
+	Link,
+} from "@mui/material";
 import UserContext from "../contexts/UserContext";
 
 export default function LoginPage() {
-	const { login } = useContext(UserContext);
+	const { login, error } = useContext(UserContext);
 
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+	const [errors, setErrors] = useState(null);
+
+	//to keep track of server errors
+	useEffect(() => {
+		setErrors({ fromServer: error });
+	}, [error]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
 		await login({ username, password });
 	};
 
@@ -19,6 +34,11 @@ export default function LoginPage() {
 			<Typography component="h1" variant="h3" align="center" mb={3}>
 				Log in
 			</Typography>
+			{errors && errors.fromServer && (
+				<Alert severity="error" sx={{ mb: 1 }}>
+					{error}
+				</Alert>
+			)}
 			<Box
 				component="form"
 				onSubmit={handleSubmit}

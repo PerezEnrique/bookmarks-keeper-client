@@ -5,12 +5,14 @@ import {
 	getCurrentUser as doGetCurrentUser,
 } from "../services/authService";
 import { signup as doSignup } from "../services/usersService";
+import useErrorHandler from "../hooks/useErrorHandler";
 
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
 	const [user, setUser] = useState(null);
 	const [userIsLoading, setUserIsloading] = useState(false);
+	const [error, setError] = useState(null);
 
 	const tokenKey = "auth-token";
 
@@ -48,7 +50,7 @@ export function UserProvider({ children }) {
 			setUser(data);
 			setUserIsloading(data);
 		} catch (err) {
-			console.log(err);
+			setError(useErrorHandler(err));
 		}
 	};
 
@@ -61,7 +63,7 @@ export function UserProvider({ children }) {
 			setUser(data);
 			setUserIsloading(false);
 		} catch (err) {
-			console.log(err);
+			setError(useErrorHandler(err));
 		}
 	};
 
@@ -72,6 +74,7 @@ export function UserProvider({ children }) {
 	const providerValue = {
 		user,
 		userIsLoading,
+		error,
 		login,
 		signup,
 		logout,
