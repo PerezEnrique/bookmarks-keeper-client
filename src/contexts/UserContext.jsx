@@ -1,10 +1,10 @@
 import React, { createContext, useState, useEffect } from "react";
-import jwtDecode from "jwt-decode";
 import http from "../services/httpService";
 import {
 	login as doLogin,
 	getCurrentUser as doGetCurrentUser,
 } from "../services/authService";
+import { signup as doSignup } from "../services/usersService";
 
 const UserContext = createContext();
 
@@ -39,6 +39,19 @@ export function UserProvider({ children }) {
 		return localStorage.getItem(tokenKey);
 	};
 
+	const signup = async function (credentials) {
+		try {
+			setUserIsloading(true);
+			const { headers, data } = await doSignup(credentials);
+			const token = headers["authorization"];
+			localStorage.setItem(tokenKey, token);
+			setUser(data);
+			setUserIsloading(data);
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
 	const login = async function (credentials) {
 		try {
 			setUserIsloading(true);
@@ -60,6 +73,7 @@ export function UserProvider({ children }) {
 		user,
 		userIsLoading,
 		login,
+		signup,
 		logout,
 	};
 
