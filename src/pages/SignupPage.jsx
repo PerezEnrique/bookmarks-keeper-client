@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
 	Container,
@@ -21,11 +21,6 @@ export default function SignupPage() {
 	const [passwordConfirm, setPasswordConfirm] = useState("");
 	const [errors, setErrors] = useState(null);
 
-	//to keep track of server errors
-	useEffect(() => {
-		setErrors({ fromServer: error });
-	}, [error]);
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -47,7 +42,7 @@ export default function SignupPage() {
 			<Typography component="h1" variant="h3" align="center" mb={3}>
 				Sign up
 			</Typography>
-			{errors && errors.fromServer && (
+			{error && (
 				<Alert severity="error" sx={{ mb: 1 }}>
 					{error}
 				</Alert>
