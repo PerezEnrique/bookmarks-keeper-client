@@ -10,6 +10,8 @@ import {
 	Alert,
 } from "@mui/material";
 import UserContext from "../contexts/UserContext";
+import { createUser } from "../utils/validation-schemas/users-validation-schemas";
+import useJoiValidation from "../hooks/useJoiValidation";
 
 export default function SignupPage() {
 	const { signup, error } = useContext(UserContext);
@@ -26,6 +28,17 @@ export default function SignupPage() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		const validationErrors = useJoiValidation(createUser, {
+			username,
+			password,
+			passwordConfirm,
+		});
+		if (validationErrors) {
+			setErrors(validationErrors);
+			return;
+		}
+
 		await signup({ username, password });
 	};
 
@@ -55,18 +68,24 @@ export default function SignupPage() {
 					label="username"
 					value={username}
 					onChange={(e) => setUsername(e.target.value)}
+					error={errors && errors.username && errors.username.length > 0} //because this component from material/ui doesn't accept truthy falsy booleans
+					helperText={errors && errors.username}
 				/>
 				<TextField
 					label="password"
 					type="password"
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
+					error={errors && errors.password && errors.password.length > 0}
+					helperText={errors && errors.password}
 				/>
 				<TextField
 					label="confirm password"
 					type="password"
 					value={passwordConfirm}
 					onChange={(e) => setPasswordConfirm(e.target.value)}
+					error={errors && errors.passwordConfirm && errors.passwordConfirm.length > 0}
+					helperText={errors && errors.passwordConfirm}
 				/>
 				<Button type="submit" variant="contained">
 					Send

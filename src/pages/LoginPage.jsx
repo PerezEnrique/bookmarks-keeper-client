@@ -10,6 +10,8 @@ import {
 	Link,
 } from "@mui/material";
 import UserContext from "../contexts/UserContext";
+import { logUserIn } from "../utils/validation-schemas/users-validation-schemas";
+import useJoiValidation from "../hooks/useJoiValidation";
 
 export default function LoginPage() {
 	const { login, error } = useContext(UserContext);
@@ -25,6 +27,12 @@ export default function LoginPage() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		const validationErrors = useJoiValidation(logUserIn, { username, password });
+		if (validationErrors) {
+			setErrors(validationErrors);
+			return;
+		}
 
 		await login({ username, password });
 	};
@@ -55,12 +63,16 @@ export default function LoginPage() {
 					label="username"
 					value={username}
 					onChange={(e) => setUsername(e.target.value)}
+					error={errors && errors.username && errors.username.length > 0} //because this component from material/ui doesn't accept truthy falsy booleans
+					helperText={errors && errors.username}
 				/>
 				<TextField
 					label="password"
 					type="password"
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
+					error={errors && errors.password && errors.password.length > 0}
+					helperText={errors && errors.password}
 				/>
 				<Button type="submit" variant="contained">
 					Send
