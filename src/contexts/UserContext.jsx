@@ -1,10 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
 import http from "../services/httpService";
-import {
-	login as doLogin,
-	getCurrentUser as doGetCurrentUser,
-} from "../services/authService";
-import { signup as doSignup } from "../services/usersService";
 import useErrorHandler from "../hooks/useErrorHandler";
 
 const UserContext = createContext();
@@ -26,7 +21,7 @@ export function UserProvider({ children }) {
 		async function getCurrentUser() {
 			try {
 				setUserIsloading(true);
-				const { data } = await doGetCurrentUser();
+				const { data } = await http.get(`/auth/current-user`);
 				setUser(data);
 				setUserIsloading(false);
 			} catch (err) {
@@ -44,7 +39,7 @@ export function UserProvider({ children }) {
 	const signup = async function (credentials) {
 		try {
 			setUserIsloading(true);
-			const { headers, data } = await doSignup(credentials);
+			const { headers, data } = await http.post(`/users`, credentials);
 			const token = headers["authorization"];
 			localStorage.setItem(tokenKey, token);
 			setUser(data);
@@ -57,7 +52,7 @@ export function UserProvider({ children }) {
 	const login = async function (credentials) {
 		try {
 			setUserIsloading(true);
-			const { headers, data } = await doLogin(credentials);
+			const { headers, data } = await http.post(`/auth/login`, credentials);
 			const token = headers["authorization"];
 			localStorage.setItem(tokenKey, token);
 			setUser(data);
