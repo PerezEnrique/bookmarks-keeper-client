@@ -1,21 +1,21 @@
 /** @type {import('webpack').Configuration} */
-const path = require('path');
-const { DefinePlugin } = require('webpack');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const { DefinePlugin } = require("webpack");
+const HTMLWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-	entry: './src/index.js',
+	entry: "./src/index.js",
 	output: {
-		filename: 'bundle.js',
-		path: path.resolve(__dirname, 'dist'),
+		filename: "bundle.js",
+		path: path.resolve(__dirname, "dist"),
 	},
 	devServer: {
 		compress: true,
 		historyApiFallback: true,
 	},
-	devtool: 'eval-source-map',
+	devtool: "eval-source-map",
 	resolve: {
-		extensions: ['.js', '.jsx'],
+		extensions: [".js", ".jsx"],
 	},
 	module: {
 		rules: [
@@ -23,27 +23,27 @@ module.exports = {
 				test: /\.(js|jsx)$/,
 				exclude: /node_modules/,
 				use: {
-					loader: 'babel-loader',
+					loader: "babel-loader",
 				},
 			},
 			{
 				test: /\.(ico)$/,
-				type: 'assets/resource',
+				type: "assets/resource",
 			},
 			{
 				test: /\.(woff|woff2|eot|ttf)$/i,
-				type: 'asset/resource',
+				type: "asset/resource",
 			},
 		],
 	},
 	plugins: [
 		new HTMLWebpackPlugin({
-			template: './src/public/index.html',
-			filename: './index.html',
-			favicon: './src/public/favicon.ico',
+			template: "./src/public/index.html",
+			filename: "./index.html",
+			favicon: "./src/public/favicon.ico",
 		}),
 		new DefinePlugin({
-			API_URL: JSON.stringify('http://localhost:5000/api'),
+			API_URL: JSON.stringify("http://localhost:5000/api"),
 		}),
 	],
 };
