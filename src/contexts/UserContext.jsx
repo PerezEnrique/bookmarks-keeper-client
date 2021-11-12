@@ -66,6 +66,36 @@ export function UserProvider({ children }) {
 		localStorage.removeItem(tokenKey);
 	};
 
+	const addBookmark = async function (content) {
+		try {
+			setUserIsloading(true);
+			const { data } = await http.post("/bookmarks", content);
+			setUser(data);
+		} catch (err) {
+			setError(useErrorHandler(err));
+		}
+	};
+
+	const editBookmark = async function (_id, content) {
+		try {
+			setUserIsloading(true);
+			const { data } = await http.put(`/bookmarks/${_id}`, content);
+			setUser(data);
+		} catch (err) {
+			setError(useErrorHandler(err));
+		}
+	};
+
+	const removeBookmark = async function (_id) {
+		try {
+			setUserIsloading(true);
+			const { data } = await http.delete(`/bookmarks/${_id}`);
+			setUser(data);
+		} catch (err) {
+			setError(useErrorHandler(err));
+		}
+	};
+
 	const providerValue = {
 		user,
 		userIsLoading,
@@ -73,6 +103,9 @@ export function UserProvider({ children }) {
 		login,
 		signup,
 		logout,
+		addBookmark,
+		editBookmark,
+		removeBookmark,
 	};
 
 	return <UserContext.Provider value={providerValue}>{children}</UserContext.Provider>;
