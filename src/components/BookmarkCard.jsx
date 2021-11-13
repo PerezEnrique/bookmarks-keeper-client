@@ -88,7 +88,7 @@ export default function BookmarkCard({
 				</IconButton>
 			</CardActions>
 			<EditBookmarkDialog
-				currentData={{ url, name, tags }}
+				currentData={{ _id, url, name, tags }}
 				open={editModal}
 				handleClose={() => setEditModal(false)}
 			/>
