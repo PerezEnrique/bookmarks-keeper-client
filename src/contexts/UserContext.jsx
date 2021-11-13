@@ -71,6 +71,7 @@ export function UserProvider({ children }) {
 			setUserIsloading(true);
 			const { data } = await http.post("/bookmarks", content);
 			setUser(data);
+			setUserIsloading(false);
 		} catch (err) {
 			setError(useErrorHandler(err));
 		}
@@ -81,6 +82,7 @@ export function UserProvider({ children }) {
 			setUserIsloading(true);
 			const { data } = await http.put(`/bookmarks/${_id}`, content);
 			setUser(data);
+			setUserIsloading(false);
 		} catch (err) {
 			setError(useErrorHandler(err));
 		}
@@ -91,6 +93,7 @@ export function UserProvider({ children }) {
 			setUserIsloading(true);
 			const { data } = await http.delete(`/bookmarks/${_id}`);
 			setUser(data);
+			setUserIsloading(false);
 		} catch (err) {
 			setError(useErrorHandler(err));
 		}
