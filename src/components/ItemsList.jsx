@@ -15,10 +15,12 @@ export default function ItemsList({
 		<main>
 			{loading && onLoading}
 			{!loading && !totalItems.length && onNoItem}
-			{totalItems.length && !itemsToDisplay && onNoSearchResults}
-			<Masonry columns={3} spacing={3}>
-				{itemsToDisplay.map(children || render)}
-			</Masonry>
+			{!loading && totalItems.length && !itemsToDisplay && onNoSearchResults}
+			{!loading && itemsToDisplay && (
+				<Masonry columns={3} spacing={3}>
+					{itemsToDisplay.map(children || render)}
+				</Masonry>
+			)}
 		</main>
 	);
 }
