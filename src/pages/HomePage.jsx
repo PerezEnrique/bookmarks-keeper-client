@@ -30,11 +30,11 @@ export default function HomePage() {
 							There's no bookmark to show. Create one?
 						</Typography>
 					}
-					onNoSearchResults={() => (
+					onNoSearchResults={
 						<Typography component="h2" variant="h5">
 							There's no results for "{searchText}"
 						</Typography>
-					)}
+					}
 				>
 					{(bookmark) => <BookmarkCard key={bookmark._id} bookmark={bookmark} />}
 				</ItemsList>

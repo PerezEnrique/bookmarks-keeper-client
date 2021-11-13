@@ -15,7 +15,7 @@ export default function ItemsList({
 		<main>
 			{loading && onLoading}
 			{!loading && !totalItems.length && onNoItem}
-			{!loading && !!totalItems.length && !itemsToDisplay.length && onNoSearchResults()}
+			{!loading && !!totalItems.length && !itemsToDisplay.length && onNoSearchResults}
 			{!loading && !!itemsToDisplay.length && (
 				<Masonry columns={3} spacing={3}>
 					{itemsToDisplay.map(children || render)}
