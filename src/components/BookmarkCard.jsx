@@ -94,6 +94,7 @@ export default function BookmarkCard({
 			/>
 			<DeleteBookmarkDialog
 				bookmarkId={_id}
+				bookmarkName={name}
 				open={deleteModal}
 				handleClose={() => setDeleteModal(false)}
 			/>
