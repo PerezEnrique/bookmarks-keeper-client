@@ -43,9 +43,10 @@ export function UserProvider({ children }) {
 			const token = headers["authorization"];
 			localStorage.setItem(tokenKey, token);
 			setUser(data);
-			setUserIsloading(data);
+			setUserIsloading(false);
 		} catch (err) {
 			setError(useErrorHandler(err));
+			setUserIsloading(false);
 		}
 	};
 
@@ -59,6 +60,7 @@ export function UserProvider({ children }) {
 			setUserIsloading(false);
 		} catch (err) {
 			setError(useErrorHandler(err));
+			setUserIsloading(false);
 		}
 	};
 
@@ -74,6 +76,7 @@ export function UserProvider({ children }) {
 			setUserIsloading(false);
 		} catch (err) {
 			setError(useErrorHandler(err));
+			setUserIsloading(false);
 		}
 	};
 
@@ -85,6 +88,7 @@ export function UserProvider({ children }) {
 			setUserIsloading(false);
 		} catch (err) {
 			setError(useErrorHandler(err));
+			setUserIsloading(false);
 		}
 	};
 
@@ -96,6 +100,7 @@ export function UserProvider({ children }) {
 			setUserIsloading(false);
 		} catch (err) {
 			setError(useErrorHandler(err));
+			setUserIsloading(false);
 		}
 	};
 
