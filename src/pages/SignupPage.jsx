@@ -1,20 +1,13 @@
 import React, { useContext, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import {
-	Container,
-	Box,
-	TextField,
-	Typography,
-	Button,
-	Link,
-	Alert,
-} from "@mui/material";
+import { Container, Box, TextField, Typography, Link, Alert } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import UserContext from "../contexts/UserContext";
 import { createUser } from "../utils/validation-schemas/users-validation-schemas";
 import useJoiValidation from "../hooks/useJoiValidation";
 
 export default function SignupPage() {
-	const { signup, error } = useContext(UserContext);
+	const { signup, userIsLoading, error } = useContext(UserContext);
 
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
@@ -23,6 +16,8 @@ export default function SignupPage() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		setErrors(null);
 
 		const validationErrors = useJoiValidation(createUser, {
 			username,
@@ -82,9 +77,9 @@ export default function SignupPage() {
 					error={errors && errors.passwordConfirm && errors.passwordConfirm.length > 0}
 					helperText={errors && errors.passwordConfirm}
 				/>
-				<Button type="submit" variant="contained">
+				<LoadingButton loading={userIsLoading} type="submit" variant="contained">
 					Send
-				</Button>
+				</LoadingButton>
 			</Box>
 			<Typography align="center">
 				Already have an account?{" "}
