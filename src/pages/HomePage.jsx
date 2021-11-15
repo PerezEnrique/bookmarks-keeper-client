@@ -10,8 +10,9 @@ import {
 import UserContext from "../contexts/UserContext";
 import ItemsList from "../components/ItemsList";
 import BookmarkCard from "../components/BookmarkCard";
+import Header from "../components/Header";
 
-export default function HomePage() {
+export default function HomePage({ location }) {
 	const { user, userIsLoading } = useContext(UserContext);
 
 	const searchText = "temporary value for search text";
@@ -19,6 +20,7 @@ export default function HomePage() {
 	return (
 		<React.Fragment>
 			<CssBaseline />
+			<Header location={location} />
 			<Container sx={{ mt: 6 }}>
 				<Typography component="h1" variant="h4" mb={3}>
 					Your bookmarks, {user.username}
