@@ -1,5 +1,12 @@
 import React, { useContext } from "react";
-import { Box, CssBaseline, CircularProgress, Container, Typography } from "@mui/material";
+import {
+	Box,
+	CssBaseline,
+	CircularProgress,
+	Container,
+	Grid,
+	Typography,
+} from "@mui/material";
 import UserContext from "../contexts/UserContext";
 import ItemsList from "../components/ItemsList";
 import BookmarkCard from "../components/BookmarkCard";
@@ -36,7 +43,11 @@ export default function HomePage() {
 						</Typography>
 					}
 				>
-					{(bookmark) => <BookmarkCard key={bookmark._id} bookmark={bookmark} />}
+					{(bookmark) => (
+						<Grid item key={bookmark._id} item xs={12} md={6} lg={4}>
+							<BookmarkCard bookmark={bookmark} />
+						</Grid>
+					)}
 				</ItemsList>
 			</Container>
 		</React.Fragment>

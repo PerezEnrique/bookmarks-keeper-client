@@ -1,5 +1,5 @@
-import Masonry from "@mui/lab/Masonry";
 import React from "react";
+import { Grid } from "@mui/material";
 
 export default function ItemsList({
 	totalItems,
@@ -17,9 +17,9 @@ export default function ItemsList({
 			{!loading && !totalItems.length && onNoItem}
 			{!loading && !!totalItems.length && !itemsToDisplay.length && onNoSearchResults}
 			{!loading && !!itemsToDisplay.length && (
-				<Masonry columns={3} spacing={3}>
+				<Grid container spacing={2}>
 					{itemsToDisplay.map(children || render)}
-				</Masonry>
+				</Grid>
 			)}
 		</main>
 	);

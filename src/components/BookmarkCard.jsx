@@ -24,7 +24,7 @@ export default function BookmarkCard({
 	const [deleteModal, setDeleteModal] = useState(false);
 
 	return (
-		<Card>
+		<Card sx={{ maxWidth: 400, mx: "auto" }}>
 			<CardContent>
 				<Typography component="h2" variant="h5" mb="1">
 					{name}
