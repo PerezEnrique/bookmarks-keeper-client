@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
 	Box,
 	CssBaseline,
@@ -14,20 +14,41 @@ import Header from "../components/Header";
 
 export default function HomePage({ location }) {
 	const { user, userIsLoading } = useContext(UserContext);
+	const { username, bookmarks } = user;
 
-	const searchText = "temporary value for search text";
+	const [itemsToDisplay, setItemsToDisplay] = useState([]);
+	const [searchText, setSearchText] = useState("");
+
+	//set bookmarks to display to all user's bookmarks, everytime user changes
+	useEffect(() => {
+		if (userIsLoading) return;
+		if (bookmarks.length < 1) return;
+		setItemsToDisplay([...bookmarks]);
+	}, [userIsLoading, user]);
+
+	useEffect(() => {
+		if (userIsLoading) return;
+		if (bookmarks.length < 1) return;
+
+		let filteredBookmarks = [...bookmarks];
+		filteredBookmarks = bookmarks.filter((bookmark) => {
+			const regex = new RegExp(searchText, "i");
+			return regex.test(bookmark.name);
+		});
+		setItemsToDisplay(filteredBookmarks);
+	}, [userIsLoading, user, searchText]);
 
 	return (
 		<React.Fragment>
 			<CssBaseline />
-			<Header location={location} />
+			<Header location={location} searchText={searchText} handleSearch={setSearchText} />
 			<Container sx={{ mt: 6 }}>
 				<Typography component="h1" variant="h4" mb={3}>
-					Your bookmarks, {user.username}
+					Your bookmarks, {username}
 				</Typography>
 				<ItemsList
-					totalItems={user.bookmarks}
-					itemsToDisplay={user.bookmarks} //for the moment it is going to be equal to totalBookmarks
+					totalItems={bookmarks}
+					itemsToDisplay={itemsToDisplay} //for the moment it is going to be equal to totalBookmarks
 					loading={userIsLoading}
 					onLoading={
 						<Box sx={{ textAlign: "center" }}>
