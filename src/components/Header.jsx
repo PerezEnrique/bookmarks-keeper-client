@@ -1,8 +1,7 @@
 import React from "react";
-import { AppBar, Box, InputBase, Stack, Toolbar, Typography } from "@mui/material";
-import { alpha, styled } from "@mui/material/styles";
+import { Link as RouterLink } from "react-router-dom";
+import { AppBar, Box, InputBase, Link, Stack, Toolbar, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { width } from "@mui/system";
 
 export default function Header({ location, searchText, handleSearch }) {
 	return (
@@ -23,6 +22,7 @@ export default function Header({ location, searchText, handleSearch }) {
 							alignItems="center"
 							sx={{
 								width: "12rem",
+								mr: 2,
 								borderRadius: 1,
 								bgcolor: "text.disabled",
 								":hover": { bgcolor: "text.secondary" },
@@ -55,6 +55,24 @@ export default function Header({ location, searchText, handleSearch }) {
 							/>
 						</Stack>
 					)}
+					<Link
+						to="#"
+						component={RouterLink}
+						color="inherit"
+						underline="none"
+						sx={{ mr: 2 }}
+					>
+						Profile
+					</Link>
+					<Link
+						to="/log-out"
+						component={RouterLink}
+						color="inherit"
+						underline="none"
+						sx={{ mr: 2 }}
+					>
+						Log out
+					</Link>
 				</Toolbar>
 			</AppBar>
 		</Box>
