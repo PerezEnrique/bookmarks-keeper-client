@@ -2,11 +2,14 @@ import React, { useContext, useState, useEffect } from "react";
 import {
 	Box,
 	CssBaseline,
+	Chip,
 	CircularProgress,
 	Container,
 	Grid,
+	Stack,
 	Typography,
 } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
 import UserContext from "../contexts/UserContext";
 import ItemsList from "../components/ItemsList";
 import BookmarkCard from "../components/BookmarkCard";
@@ -18,6 +21,18 @@ export default function HomePage({ location }) {
 
 	const [itemsToDisplay, setItemsToDisplay] = useState([]);
 	const [searchText, setSearchText] = useState("");
+	const [filterTags, setFilterTags] = useState([]);
+
+	const handleClickOnTag = (tag) => {
+		const tagsArray = [...filterTags];
+		tagsArray.push(tag);
+		setFilterTags(tagsArray);
+	};
+
+	const handleDeleteTagFilter = (tag) => {
+		const tagsArray = filterTags.filter((elem) => elem !== tag);
+		setFilterTags(tagsArray);
+	};
 
 	//set bookmarks to display to all user's bookmarks, everytime user changes
 	useEffect(() => {
@@ -31,21 +46,53 @@ export default function HomePage({ location }) {
 		if (bookmarks.length < 1) return;
 
 		let filteredBookmarks = [...bookmarks];
-		filteredBookmarks = bookmarks.filter((bookmark) => {
+
+		//filter by query
+		filteredBookmarks = filteredBookmarks.filter((bookmark) => {
 			const regex = new RegExp(searchText, "i");
 			return regex.test(bookmark.name);
 		});
+
+		//filter by tag
+		filteredBookmarks = filteredBookmarks.filter((bookmark) => {
+			return filterTags.every((tag) => {
+				return bookmark.tags.includes(tag);
+			});
+		});
+
 		setItemsToDisplay(filteredBookmarks);
-	}, [userIsLoading, user, searchText]);
+	}, [userIsLoading, searchText, filterTags]);
 
 	return (
 		<React.Fragment>
 			<CssBaseline />
 			<Header location={location} searchText={searchText} handleSearch={setSearchText} />
 			<Container sx={{ mt: 6 }}>
-				<Typography component="h1" variant="h4" mb={3}>
+				<Typography component="h1" variant="h4" mb={1}>
 					Your bookmarks, {username}
 				</Typography>
+				{!!filterTags.length && (
+					<Box component="section" sx={{ mb: 3, ml: { md: "70%" } }}>
+						<Typography mb={1} color="text.secondary">
+							Filtering tags:
+						</Typography>
+						<Box
+							sx={{ display: "flex", flexWrap: "wrap", maxWidth: "18rem", ml: "2rem" }}
+						>
+							{filterTags.map((tag) => (
+								<Chip
+									key={uuidv4()}
+									clickable
+									size="small"
+									label={tag}
+									color="primary"
+									onDelete={() => handleDeleteTagFilter(tag)}
+									sx={{ mr: 1, mb: 1 }}
+								/>
+							))}
+						</Box>
+					</Box>
+				)}
 				<ItemsList
 					totalItems={bookmarks}
 					itemsToDisplay={itemsToDisplay} //for the moment it is going to be equal to totalBookmarks
@@ -68,7 +115,7 @@ export default function HomePage({ location }) {
 				>
 					{(bookmark) => (
 						<Grid item key={bookmark._id} item xs={12} md={6} lg={4}>
-							<BookmarkCard bookmark={bookmark} />
+							<BookmarkCard bookmark={bookmark} handleClickOnTag={handleClickOnTag} />
 						</Grid>
 					)}
 				</ItemsList>

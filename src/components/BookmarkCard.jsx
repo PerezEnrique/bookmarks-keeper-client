@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
 import {
 	Box,
 	Card,
@@ -19,6 +18,7 @@ import DeleteBookmarkDialog from "./DeleteBookmarkDialog";
 
 export default function BookmarkCard({
 	bookmark: { _id, url, imageUrl, title, name, description, tags },
+	handleClickOnTag,
 }) {
 	const [editModal, setEditModal] = useState(false);
 	const [deleteModal, setDeleteModal] = useState(false);
@@ -32,19 +32,19 @@ export default function BookmarkCard({
 				<Link href={url} underline="none">
 					{url}
 				</Link>
-				<Stack direction="row" spacing={1} sx={{ mt: 1 }}>
+				<Box sx={{ mt: 1, display: "flex", flexWrap: "wrap" }}>
 					{tags.map((tag) => (
 						<Chip
 							key={uuidv4()}
 							clickable
-							component={RouterLink}
-							to="#"
 							size="small"
 							label={tag}
 							color="primary"
+							onClick={() => handleClickOnTag(tag)}
+							sx={{ mr: 1, mb: 1 }}
 						/>
 					))}
-				</Stack>
+				</Box>
 			</CardContent>
 			<Box
 				sx={{
