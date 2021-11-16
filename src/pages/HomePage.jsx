@@ -6,9 +6,10 @@ import {
 	CircularProgress,
 	Container,
 	Grid,
-	Stack,
+	Link,
 	Typography,
 } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import UserContext from "../contexts/UserContext";
 import ItemsList from "../components/ItemsList";
@@ -104,12 +105,17 @@ export default function HomePage({ location }) {
 					}
 					onNoItem={
 						<Typography component="h2" variant="h5">
-							There's no bookmark to show. Create one?
+							There's no bookmark to show.{" "}
+							<Link to="#" component={RouterLink} underline="none">
+								Create one?
+							</Link>
 						</Typography>
 					}
 					onNoSearchResults={
 						<Typography component="h2" variant="h5">
-							There's no results for "{searchText}"
+							There's no results for {searchText && `"${searchText}"`}{" "}
+							{searchText && !!filterTags.length && "with"}{" "}
+							{!!filterTags.length && `tags ${filterTags.join(", ")}`}
 						</Typography>
 					}
 				>
