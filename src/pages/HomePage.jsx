@@ -68,7 +68,7 @@ export default function HomePage({ location }) {
 			<CssBaseline />
 			<Header location={location} searchText={searchText} handleSearch={setSearchText} />
 			<Container sx={{ mt: 6 }}>
-				<Typography component="h1" variant="h4" mb={1}>
+				<Typography component="h1" variant="h4" mb={2} sx={{ fontWeight: 700 }}>
 					Your bookmarks, {username}
 				</Typography>
 				{!!filterTags.length && (

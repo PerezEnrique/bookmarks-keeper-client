@@ -26,7 +26,7 @@ export default function BookmarkCard({
 	return (
 		<Card sx={{ maxWidth: 400, mx: "auto" }}>
 			<CardContent>
-				<Typography component="h2" variant="h5" mb="1">
+				<Typography component="h2" variant="h5" mb="1" sx={{ fontWeight: 700 }}>
 					{name}
 				</Typography>
 				<Link href={url} underline="none">
