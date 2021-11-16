@@ -2,6 +2,7 @@
 const path = require("path");
 const { DefinePlugin } = require("webpack");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
 	entry: "./src/index.js",
@@ -27,6 +28,10 @@ module.exports = {
 				},
 			},
 			{
+				test: /\.css$/,
+				use: [MiniCssExtractPlugin.loader, "css-loader"],
+			},
+			{
 				test: /\.(ico)$/,
 				type: "assets/resource",
 			},
@@ -42,6 +47,7 @@ module.exports = {
 			filename: "./index.html",
 			favicon: "./src/public/favicon.ico",
 		}),
+		new MiniCssExtractPlugin(),
 		new DefinePlugin({
 			API_URL: JSON.stringify("http://localhost:5000/api"),
 		}),
