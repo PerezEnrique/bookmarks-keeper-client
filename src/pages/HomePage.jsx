@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import {
 	Box,
+	Button,
 	CssBaseline,
 	Chip,
 	CircularProgress,
@@ -9,7 +11,7 @@ import {
 	Link,
 	Typography,
 } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import AddIcon from "@mui/icons-material/Add";
 import { v4 as uuidv4 } from "uuid";
 import UserContext from "../contexts/UserContext";
 import ItemsList from "../components/ItemsList";
@@ -26,6 +28,9 @@ export default function HomePage({ location }) {
 
 	const handleClickOnTag = (tag) => {
 		const tagsArray = [...filterTags];
+
+		if (tagsArray.includes(tag)) return;
+
 		tagsArray.push(tag);
 		setFilterTags(tagsArray);
 	};
@@ -72,6 +77,13 @@ export default function HomePage({ location }) {
 				<Typography component="h1" variant="h4" mb={2} sx={{ fontWeight: 700 }}>
 					Your bookmarks, {username}
 				</Typography>
+				<Button
+					variant="contained"
+					sx={{ mb: 3 }}
+					endIcon={<AddIcon sx={{ mb: "2.5px" }} />}
+				>
+					Add bookmark
+				</Button>
 				{!!filterTags.length && (
 					<Box component="section" sx={{ mb: 3, ml: { md: "70%" } }}>
 						<Typography mb={1} color="text.secondary">

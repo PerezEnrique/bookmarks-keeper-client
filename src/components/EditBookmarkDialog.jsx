@@ -37,6 +37,12 @@ export default function EditBookmarkDialog({
 			return;
 		}
 		const tagsArray = [...tags];
+
+		if (tagsArray.includes(newTag)) {
+			setErrors({ ...errors, tags: "this bookmark already have that tag" });
+			return;
+		}
+
 		tagsArray.push(newTag);
 		setTags(tagsArray);
 		setNewTag("");
