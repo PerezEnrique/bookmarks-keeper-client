@@ -112,7 +112,7 @@ export default function HomePage({ location }) {
 				)}
 				<ItemsList
 					totalItems={bookmarks}
-					itemsToDisplay={itemsToDisplay} //for the moment it is going to be equal to totalBookmarks
+					itemsToDisplay={itemsToDisplay}
 					loading={userIsLoading}
 					onLoading={
 						<Box sx={{ textAlign: "center" }}>
