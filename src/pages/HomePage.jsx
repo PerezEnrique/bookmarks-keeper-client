@@ -14,6 +14,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import { v4 as uuidv4 } from "uuid";
 import UserContext from "../contexts/UserContext";
+import AddBookmarkDialog from "../components/AddBookmarkDialog";
 import ItemsList from "../components/ItemsList";
 import BookmarkCard from "../components/BookmarkCard";
 import Header from "../components/Header";
@@ -25,6 +26,7 @@ export default function HomePage({ location }) {
 	const [itemsToDisplay, setItemsToDisplay] = useState([]);
 	const [searchText, setSearchText] = useState("");
 	const [filterTags, setFilterTags] = useState([]);
+	const [addModal, setAddModal] = useState(false);
 
 	const handleClickOnTag = (tag) => {
 		const tagsArray = [...filterTags];
@@ -81,9 +83,11 @@ export default function HomePage({ location }) {
 					variant="contained"
 					sx={{ mb: 3 }}
 					endIcon={<AddIcon sx={{ mb: "2.5px" }} />}
+					onClick={() => setAddModal(true)}
 				>
 					Add bookmark
 				</Button>
+				<AddBookmarkDialog open={addModal} handleClose={() => setAddModal(false)} />
 				{!!filterTags.length && (
 					<Box component="section" sx={{ mb: 3, ml: { md: "70%" } }}>
 						<Typography mb={1} color="text.secondary">
