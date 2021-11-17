@@ -84,7 +84,11 @@ export default function EditBookmarkDialog({
 						flexDirection: "column",
 						justifyContent: "space-around",
 						alignItems: "center",
-						"& > :not(style)": { my: 1, minWidth: "450px" },
+						"& > :not(style)": {
+							my: 1,
+							width: { sm: "450px" },
+							maxWidth: { xs: "227px", sm: "initial" },
+						},
 					}}
 				>
 					<TextField
@@ -101,9 +105,9 @@ export default function EditBookmarkDialog({
 						error={errors && errors.name && errors.name.length > 0}
 						helperText={errors && errors.name}
 					></TextField>
-					<Stack direction="row" alignItems="center">
+					<Stack direction={{ xs: "column", sm: "row" }} alignItems="center">
 						<TextField
-							sx={{ mr: 1 }}
+							sx={{ mb: { xs: 1, sm: 0 }, mr: { sm: 1 } }}
 							label="tags"
 							value={newTag}
 							onChange={(e) => setNewTag(e.target.value)}
