@@ -121,7 +121,7 @@ export default function AddBookmarkDialog({ open, handleClose }) {
 							Add tag
 						</Button>
 					</Stack>
-					<Stack direction="row" spacing={1}>
+					<Box sx={{ display: "flex", flexWrap: "wrap" }}>
 						{tags.map((tag) => (
 							<Chip
 								key={uuidv4()}
@@ -129,9 +129,10 @@ export default function AddBookmarkDialog({ open, handleClose }) {
 								label={tag}
 								color="primary"
 								onDelete={() => handleTagDelete(tag)}
+								sx={{ mr: 1, mb: 1 }}
 							/>
 						))}
-					</Stack>
+					</Box>
 					<LoadingButton loading={userIsLoading} type="submit" variant="contained">
 						Send
 					</LoadingButton>
