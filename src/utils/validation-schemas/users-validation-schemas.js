@@ -21,8 +21,11 @@ export const updateUser = Joi.object({
 	password: Joi.string().min(5).max(1024).empty("").label("Password"),
 	passwordConfirm: Joi.any()
 		.valid(Joi.ref("password"))
-		.required()
 		.empty("")
 		.label("Password confirm")
+		.when("password", {
+			is: Joi.exist(),
+			then: Joi.required(),
+		})
 		.options({ language: { any: { allowOnly: "must match password" } } }),
 }).or("username", "password");
