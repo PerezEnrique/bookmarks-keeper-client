@@ -7,6 +7,7 @@ const UserContext = createContext();
 export function UserProvider({ children }) {
 	const [user, setUser] = useState(null);
 	const [userIsLoading, setUserIsloading] = useState(false);
+	const [successMessage, setSuccessMessage] = useState("");
 	const [error, setError] = useState(null);
 
 	const tokenKey = "auth-token";
@@ -64,6 +65,21 @@ export function UserProvider({ children }) {
 		}
 	};
 
+	const updateUser = async function (content) {
+		try {
+			setUserIsloading(true);
+			const { headers, data } = await http.put("/users", content);
+			const token = headers["authorization"];
+			localStorage.setItem(tokenKey, token);
+			setUser(data);
+			setUserIsloading(false);
+			setSuccessMessage("User info successfully updated");
+		} catch (err) {
+			setError(useErrorHandler(err));
+			setUserIsloading(false);
+		}
+	};
+
 	const logout = function () {
 		localStorage.removeItem(tokenKey);
 	};
@@ -107,9 +123,11 @@ export function UserProvider({ children }) {
 	const providerValue = {
 		user,
 		userIsLoading,
+		successMessage,
 		error,
 		login,
 		signup,
+		updateUser,
 		logout,
 		addBookmark,
 		editBookmark,
