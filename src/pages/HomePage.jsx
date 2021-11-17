@@ -135,11 +135,13 @@ export default function HomePage({ location }) {
 						</Typography>
 					}
 				>
-					{(bookmark) => (
-						<Grid item key={bookmark._id} item xs={12} md={6} lg={4}>
-							<BookmarkCard bookmark={bookmark} handleClickOnTag={handleClickOnTag} />
-						</Grid>
-					)}
+					<Grid container spacing={2}>
+						{itemsToDisplay.map((bookmark) => (
+							<Grid item key={bookmark._id} item xs={12} md={6} lg={4}>
+								<BookmarkCard bookmark={bookmark} handleClickOnTag={handleClickOnTag} />
+							</Grid>
+						))}
+					</Grid>
 				</ItemsList>
 			</Container>
 		</React.Fragment>
