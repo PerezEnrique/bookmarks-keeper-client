@@ -1,11 +1,27 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { AppBar, Box, InputBase, Link, Stack, Toolbar, Typography } from "@mui/material";
+import {
+	AppBar,
+	Box,
+	InputBase,
+	Link,
+	IconButton,
+	Stack,
+	Toolbar,
+	Typography,
+	ListItem,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import MenuIcon from "@mui/icons-material/Menu";
 
-export default function Header({ location, searchText, handleSearch }) {
+export default function Header({
+	location,
+	searchText,
+	handleSearch,
+	handleClickOnMenu,
+}) {
 	return (
-		<Box sx={{ flexGrow: 1 }} component="header">
+		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">
 				<Toolbar>
 					<Typography
@@ -55,24 +71,44 @@ export default function Header({ location, searchText, handleSearch }) {
 							/>
 						</Stack>
 					)}
-					<Link
-						to="#"
-						component={RouterLink}
+					<IconButton
+						size="large"
 						color="inherit"
-						underline="none"
-						sx={{ mr: 2 }}
+						aria-label="menu"
+						onClick={handleClickOnMenu}
+						sx={{ display: { md: "none" }, ml: "auto" }}
 					>
-						Profile
-					</Link>
-					<Link
-						to="/log-out"
-						component={RouterLink}
-						color="inherit"
-						underline="none"
-						sx={{ mr: 2 }}
-					>
-						Log out
-					</Link>
+						<MenuIcon />
+					</IconButton>
+					<Box component="nav" sx={{ display: { xs: "none", md: "block" } }}>
+						<Link
+							to="/home"
+							component={RouterLink}
+							color="inherit"
+							underline="none"
+							sx={{ mr: 2 }}
+						>
+							My bookmarks
+						</Link>
+						<Link
+							to="/profile"
+							component={RouterLink}
+							color="inherit"
+							underline="none"
+							sx={{ mr: 2 }}
+						>
+							Profile
+						</Link>
+						<Link
+							to="/log-out"
+							component={RouterLink}
+							color="inherit"
+							underline="none"
+							sx={{ mr: 2 }}
+						>
+							Log out
+						</Link>
+					</Box>
 				</Toolbar>
 			</AppBar>
 		</Box>

@@ -7,6 +7,7 @@ import {
 	Chip,
 	CircularProgress,
 	Container,
+	Drawer,
 	Grid,
 	Link,
 	Typography,
@@ -18,6 +19,7 @@ import AddBookmarkDialog from "../components/AddBookmarkDialog";
 import ItemsList from "../components/ItemsList";
 import BookmarkCard from "../components/BookmarkCard";
 import Header from "../components/Header";
+import NavDrawer from "../components/NavDrawer";
 
 export default function HomePage({ location }) {
 	const { user, userIsLoading } = useContext(UserContext);
@@ -27,6 +29,11 @@ export default function HomePage({ location }) {
 	const [searchText, setSearchText] = useState("");
 	const [filterTags, setFilterTags] = useState([]);
 	const [addModal, setAddModal] = useState(false);
+	const [drawerOpen, setDrawerOpen] = useState(false);
+
+	const handleDrawerOpen = () => {
+		setDrawerOpen(!drawerOpen);
+	};
 
 	const handleClickOnTag = (tag) => {
 		const tagsArray = [...filterTags];
@@ -74,7 +81,15 @@ export default function HomePage({ location }) {
 	return (
 		<React.Fragment>
 			<CssBaseline />
-			<Header location={location} searchText={searchText} handleSearch={setSearchText} />
+			<Header
+				location={location}
+				searchText={searchText}
+				handleSearch={setSearchText}
+				handleClickOnMenu={handleDrawerOpen}
+			/>
+			<Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+				<NavDrawer />
+			</Drawer>
 			<Container sx={{ mt: 6 }}>
 				<Typography component="h1" variant="h4" mb={2} sx={{ fontWeight: 700 }}>
 					Your bookmarks, {username}
