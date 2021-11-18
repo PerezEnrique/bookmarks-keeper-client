@@ -1,16 +1,17 @@
 import React, { useContext, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { Container, Box, TextField, Typography, Alert, Link } from "@mui/material";
+import { Container, Box, TextField, Typography, Link, Alert } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import UserContext from "../contexts/UserContext";
-import { logUserIn } from "../utils/validation-schemas/users-validation-schemas";
+import { createUser } from "../utils/validation-schemas/users-validation-schemas";
 import useJoiValidation from "../hooks/useJoiValidation";
 
-export default function LoginPage() {
-	const { login, userIsLoading, error } = useContext(UserContext);
+export default function SignupPage() {
+	const { signup, userIsLoading, error } = useContext(UserContext);
 
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+	const [passwordConfirm, setPasswordConfirm] = useState("");
 	const [errors, setErrors] = useState(null);
 
 	const handleSubmit = async (e) => {
@@ -18,19 +19,23 @@ export default function LoginPage() {
 
 		setErrors(null);
 
-		const validationErrors = useJoiValidation(logUserIn, { username, password });
+		const validationErrors = useJoiValidation(createUser, {
+			username,
+			password,
+			passwordConfirm,
+		});
 		if (validationErrors) {
 			setErrors(validationErrors);
 			return;
 		}
 
-		await login({ username, password });
+		await signup({ username, password });
 	};
 
 	return (
 		<Container component="main" maxWidth="xs" sx={{ mt: 10 }}>
 			<Typography component="h1" variant="h3" align="center" mb={3}>
-				Log in
+				Sign up
 			</Typography>
 			{error && (
 				<Alert severity="error" sx={{ mb: 1 }}>
@@ -64,14 +69,22 @@ export default function LoginPage() {
 					error={errors && errors.password && errors.password.length > 0}
 					helperText={errors && errors.password}
 				/>
+				<TextField
+					label="confirm password"
+					type="password"
+					value={passwordConfirm}
+					onChange={(e) => setPasswordConfirm(e.target.value)}
+					error={errors && errors.passwordConfirm && errors.passwordConfirm.length > 0}
+					helperText={errors && errors.passwordConfirm}
+				/>
 				<LoadingButton loading={userIsLoading} type="submit" variant="contained">
 					Send
 				</LoadingButton>
 			</Box>
 			<Typography align="center">
-				Don't have an account?{" "}
-				<Link to="/sign-up" component={RouterLink}>
-					Sign up
+				Already have an account?{" "}
+				<Link to="/log-in" component={RouterLink}>
+					Log in
 				</Link>
 			</Typography>
 		</Container>

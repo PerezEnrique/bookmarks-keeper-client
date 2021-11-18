@@ -1,16 +1,14 @@
 import React, { createContext, useState, useEffect } from "react";
-import jwtDecode from "jwt-decode";
 import http from "../services/httpService";
-import {
-	login as doLogin,
-	getCurrentUser as doGetCurrentUser,
-} from "../services/authService";
+import useErrorHandler from "../hooks/useErrorHandler";
 
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
 	const [user, setUser] = useState(null);
 	const [userIsLoading, setUserIsloading] = useState(false);
+	const [successMessage, setSuccessMessage] = useState("");
+	const [error, setError] = useState(null);
 
 	const tokenKey = "auth-token";
 
@@ -24,7 +22,7 @@ export function UserProvider({ children }) {
 		async function getCurrentUser() {
 			try {
 				setUserIsloading(true);
-				const { data } = await doGetCurrentUser();
+				const { data } = await http.get(`/auth/current-user`);
 				setUser(data);
 				setUserIsloading(false);
 			} catch (err) {
@@ -39,16 +37,46 @@ export function UserProvider({ children }) {
 		return localStorage.getItem(tokenKey);
 	};
 
-	const login = async function (credentials) {
+	const signup = async function (credentials) {
 		try {
 			setUserIsloading(true);
-			const { headers, data } = await doLogin(credentials);
+			const { headers, data } = await http.post(`/users`, credentials);
 			const token = headers["authorization"];
 			localStorage.setItem(tokenKey, token);
 			setUser(data);
 			setUserIsloading(false);
 		} catch (err) {
-			console.log(err);
+			setError(useErrorHandler(err));
+			setUserIsloading(false);
+		}
+	};
+
+	const login = async function (credentials) {
+		try {
+			setUserIsloading(true);
+			const { headers, data } = await http.post(`/auth/login`, credentials);
+			const token = headers["authorization"];
+			localStorage.setItem(tokenKey, token);
+			setUser(data);
+			setUserIsloading(false);
+		} catch (err) {
+			setError(useErrorHandler(err));
+			setUserIsloading(false);
+		}
+	};
+
+	const updateUser = async function (content) {
+		try {
+			setUserIsloading(true);
+			const { headers, data } = await http.put("/users", content);
+			const token = headers["authorization"];
+			localStorage.setItem(tokenKey, token);
+			setUser(data);
+			setUserIsloading(false);
+			setSuccessMessage("User info successfully updated");
+		} catch (err) {
+			setError(useErrorHandler(err));
+			setUserIsloading(false);
 		}
 	};
 
@@ -56,11 +84,54 @@ export function UserProvider({ children }) {
 		localStorage.removeItem(tokenKey);
 	};
 
+	const addBookmark = async function (content) {
+		try {
+			setUserIsloading(true);
+			const { data } = await http.post("/bookmarks", content);
+			setUser(data);
+			setUserIsloading(false);
+		} catch (err) {
+			setError(useErrorHandler(err));
+			setUserIsloading(false);
+		}
+	};
+
+	const editBookmark = async function (_id, content) {
+		try {
+			setUserIsloading(true);
+			const { data } = await http.put(`/bookmarks/${_id}`, content);
+			setUser(data);
+			setUserIsloading(false);
+		} catch (err) {
+			setError(useErrorHandler(err));
+			setUserIsloading(false);
+		}
+	};
+
+	const removeBookmark = async function (_id) {
+		try {
+			setUserIsloading(true);
+			const { data } = await http.delete(`/bookmarks/${_id}`);
+			setUser(data);
+			setUserIsloading(false);
+		} catch (err) {
+			setError(useErrorHandler(err));
+			setUserIsloading(false);
+		}
+	};
+
 	const providerValue = {
 		user,
 		userIsLoading,
+		successMessage,
+		error,
 		login,
+		signup,
+		updateUser,
 		logout,
+		addBookmark,
+		editBookmark,
+		removeBookmark,
 	};
 
 	return <UserContext.Provider value={providerValue}>{children}</UserContext.Provider>;
