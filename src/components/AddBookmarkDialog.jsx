@@ -96,16 +96,21 @@ export default function AddBookmarkDialog({ open, handleClose }) {
 					<TextField
 						label="url"
 						value={url}
+						required
 						onChange={(e) => setUrl(e.target.value)}
 						error={errors && errors.url && errors.url.length > 0}
 						helperText={errors && errors.url}
+						InputLabelProps={{ required: false }}
 					></TextField>
 					<TextField
 						label="name"
 						value={name}
+						required
 						onChange={(e) => setName(e.target.value)}
 						error={errors && errors.name && errors.name.length > 0}
 						helperText={errors && errors.name}
+						inputProps={{ maxLength: 50 }}
+						InputLabelProps={{ required: false }}
 					></TextField>
 					<Stack direction={{ xs: "column", sm: "row" }} alignItems="center">
 						<TextField
@@ -116,6 +121,7 @@ export default function AddBookmarkDialog({ open, handleClose }) {
 							helperText="Add a tag and press enter"
 							error={errors && errors.tags && errors.tags.length > 0}
 							helperText={errors && errors.tags}
+							inputProps={{ maxLength: 50 }}
 						></TextField>
 						<Button variant="contained" onClick={handleAddTag}>
 							Add tag

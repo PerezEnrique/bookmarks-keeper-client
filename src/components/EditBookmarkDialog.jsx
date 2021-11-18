@@ -104,6 +104,7 @@ export default function EditBookmarkDialog({
 						onChange={(e) => setName(e.target.value)}
 						error={errors && errors.name && errors.name.length > 0}
 						helperText={errors && errors.name}
+						inputProps={{ maxLength: 50 }}
 					></TextField>
 					<Stack direction={{ xs: "column", sm: "row" }} alignItems="center">
 						<TextField
@@ -114,6 +115,7 @@ export default function EditBookmarkDialog({
 							helperText="Add a tag and press enter"
 							error={errors && errors.tags && errors.tags.length > 0}
 							helperText={errors && errors.tags}
+							inputProps={{ maxLength: 50 }}
 						></TextField>
 						<Button variant="contained" onClick={handleAddTag}>
 							Add tag

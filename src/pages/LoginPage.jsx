@@ -52,17 +52,23 @@ export default function LoginPage() {
 				<TextField
 					label="username"
 					value={username}
+					required
 					onChange={(e) => setUsername(e.target.value)}
 					error={errors && errors.username && errors.username.length > 0} //because this component from material/ui doesn't accept truthy falsy booleans
 					helperText={errors && errors.username}
+					inputProps={{ maxLength: 30 }}
+					InputLabelProps={{ required: false }}
 				/>
 				<TextField
 					label="password"
 					type="password"
 					value={password}
+					required
 					onChange={(e) => setPassword(e.target.value)}
 					error={errors && errors.password && errors.password.length > 0}
 					helperText={errors && errors.password}
+					inputProps={{ minLength: 5, maxLength: 1024 }}
+					InputLabelProps={{ required: false }}
 				/>
 				<LoadingButton loading={userIsLoading} type="submit" variant="contained">
 					Send
