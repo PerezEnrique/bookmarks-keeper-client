@@ -39,6 +39,7 @@ export function UserProvider({ children }) {
 
 	const signup = async function (credentials) {
 		try {
+			setError(null);
 			setUserIsloading(true);
 			const { headers, data } = await http.post(`/users`, credentials);
 			const token = headers["authorization"];
@@ -53,6 +54,7 @@ export function UserProvider({ children }) {
 
 	const login = async function (credentials) {
 		try {
+			setError(null);
 			setUserIsloading(true);
 			const { headers, data } = await http.post(`/auth/login`, credentials);
 			const token = headers["authorization"];
@@ -67,6 +69,7 @@ export function UserProvider({ children }) {
 
 	const updateUser = async function (content) {
 		try {
+			setError(null);
 			setUserIsloading(true);
 			const { headers, data } = await http.put("/users", content);
 			const token = headers["authorization"];
@@ -86,6 +89,7 @@ export function UserProvider({ children }) {
 
 	const addBookmark = async function (content) {
 		try {
+			setError(null);
 			setUserIsloading(true);
 			const { data } = await http.post("/bookmarks", content);
 			setUser(data);
@@ -98,6 +102,7 @@ export function UserProvider({ children }) {
 
 	const editBookmark = async function (_id, content) {
 		try {
+			setError(null);
 			setUserIsloading(true);
 			const { data } = await http.put(`/bookmarks/${_id}`, content);
 			setUser(data);
@@ -110,6 +115,7 @@ export function UserProvider({ children }) {
 
 	const removeBookmark = async function (_id) {
 		try {
+			setError(null);
 			setUserIsloading(true);
 			const { data } = await http.delete(`/bookmarks/${_id}`);
 			setUser(data);
