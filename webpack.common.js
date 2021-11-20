@@ -1,20 +1,16 @@
 /** @type {import('webpack').Configuration} */
 const path = require("path");
-const { DefinePlugin } = require("webpack");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
 	entry: "./src/index.js",
 	output: {
-		filename: "bundle.js",
+		filename: "[name].[contenthash].js",
 		path: path.resolve(__dirname, "dist"),
+		assetModuleFilename: "assets/[hash][ext]",
+		clean: true,
 	},
-	devServer: {
-		compress: true,
-		historyApiFallback: true,
-	},
-	devtool: "eval-source-map",
 	resolve: {
 		extensions: [".js", ".jsx"],
 	},
@@ -32,8 +28,8 @@ module.exports = {
 				use: [MiniCssExtractPlugin.loader, "css-loader"],
 			},
 			{
-				test: /\.(ico)$/,
-				type: "assets/resource",
+				test: /\.(jpg|ico)$/,
+				type: "asset/resource",
 			},
 			{
 				test: /\.(woff|woff2|eot|ttf)$/i,
@@ -47,9 +43,8 @@ module.exports = {
 			filename: "./index.html",
 			favicon: "./src/public/favicon.ico",
 		}),
-		new MiniCssExtractPlugin(),
-		new DefinePlugin({
-			API_URL: JSON.stringify("http://localhost:5000/api"),
+		new MiniCssExtractPlugin({
+			filename: "assets/styles/[name].[contenthash].css",
 		}),
 	],
 };

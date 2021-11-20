@@ -15,6 +15,7 @@ import { Edit, Delete } from "@mui/icons-material";
 import { v4 as uuidv4 } from "uuid";
 import EditBookmarkDialog from "./EditBookmarkDialog";
 import DeleteBookmarkDialog from "./DeleteBookmarkDialog";
+import noImage from "../assets/images/no-image.jpg";
 
 export default function BookmarkCard({
 	bookmark: { _id, url, imageUrl, title, name, description, tags },
@@ -66,7 +67,7 @@ export default function BookmarkCard({
 				</CardContent>
 				<CardMedia
 					component="img"
-					image={imageUrl}
+					image={!imageUrl || imageUrl === "not available" ? noImage : imageUrl}
 					alt={`${name} url preview`}
 					sx={{ display: "block", maxWidth: "100%", maxHeight: 215 }}
 				/>
