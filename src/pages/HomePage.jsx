@@ -52,7 +52,6 @@ export default function HomePage({ location }) {
 	//set bookmarks to display to all user's bookmarks, everytime user changes
 	useEffect(() => {
 		if (userIsLoading) return;
-		if (bookmarks.length < 1) return;
 		setItemsToDisplay([...bookmarks]);
 	}, [userIsLoading, user]);
 
@@ -137,8 +136,13 @@ export default function HomePage({ location }) {
 					onNoItem={
 						<Typography component="h2" variant="h5">
 							There's no bookmark to show.{" "}
-							<Link to="#" component={RouterLink} underline="none">
-								Create one?
+							<Link
+								component="button"
+								underline="none"
+								variant="h5"
+								onClick={() => setAddModal(true)}
+							>
+								Create one
 							</Link>
 						</Typography>
 					}
