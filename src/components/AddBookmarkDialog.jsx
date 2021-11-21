@@ -26,6 +26,18 @@ export default function AddBookmarkDialog({ open, handleClose }) {
 
 	//to add the new tag when user press enter
 	const handleAddTag = (e) => {
+		const currentErrors = { ...errors };
+		delete currentErrors.tags;
+		setErrors(currentErrors);
+
+		if (newTag.length < 1) {
+			setErrors({
+				...errors,
+				tags: "You can't add an empty tag",
+			});
+			return;
+		}
+
 		if (newTag.length > 50) {
 			setErrors({
 				...errors,
