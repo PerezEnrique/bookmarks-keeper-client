@@ -12,7 +12,6 @@ module.exports = merge(common, {
 		minimize: true,
 		minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
 	},
-	devtool: "source-map",
 	plugins: [
 		new DefinePlugin({
 			API_URL: JSON.stringify("https://bookmark-keeper-api.herokuapp.com/api"),
