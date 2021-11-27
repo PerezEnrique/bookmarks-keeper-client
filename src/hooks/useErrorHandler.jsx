@@ -6,6 +6,7 @@ export default function useErrorHandler(err) {
 		return err.response && err.response.status >= 400 && err.response.status < 500;
 	};
 
+	console.log("isExpected", !isExpectedError(err));
 	if (!isExpectedError(err)) {
 		return "Sorry, an unexpected error has ocurred. Please try again";
 	}
