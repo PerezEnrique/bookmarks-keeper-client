@@ -14,6 +14,7 @@ export function UserProvider({ children }) {
 
 	//with this when we have a token in our local storage it will be send by axios in a header in future request
 	useEffect(() => {
+		console.log("error property", error);
 		http.setToken(getToken());
 	});
 
@@ -61,7 +62,9 @@ export function UserProvider({ children }) {
 			localStorage.setItem(tokenKey, token);
 			setUser(data);
 			setUserIsloading(false);
+			console.log("success from login");
 		} catch (err) {
+			console.log("error from login");
 			setError(useErrorHandler(err));
 			setUserIsloading(false);
 		}
