@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
 import {
+	Alert,
 	Box,
 	Button,
 	CssBaseline,
@@ -22,7 +22,7 @@ import Header from "../components/Header";
 import NavDrawer from "../components/NavDrawer";
 
 export default function HomePage({ location }) {
-	const { user, userIsLoading } = useContext(UserContext);
+	const { user, userIsLoading, error } = useContext(UserContext);
 	const { username, bookmarks } = user;
 
 	const [itemsToDisplay, setItemsToDisplay] = useState([]);
@@ -101,6 +101,11 @@ export default function HomePage({ location }) {
 				>
 					Add bookmark
 				</Button>
+				{error && (
+					<Alert severity="error" sx={{ maxWidth: 500, mb: 2 }}>
+						{error}
+					</Alert>
+				)}
 				<AddBookmarkDialog open={addModal} handleClose={() => setAddModal(false)} />
 				{!!filterTags.length && (
 					<Box component="section" sx={{ mb: 3, ml: { md: "70%" } }}>
