@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, RouteProps } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 
-export default function ProtectedRoute({ path, component: Component, render, ...rest }) {
+export default function ProtectedRoute({ path, component: Component, render, ...rest } : RouteProps) {
 	//We need render because is posible that this protected route needs aditional custom props
 	//render is the function you pass to render={--> (props) <--}
 	//...rest is because is possible this object might have other properties.
@@ -14,8 +14,8 @@ export default function ProtectedRoute({ path, component: Component, render, ...
 			{...rest}
 			render={(props) => {
 				if (!user) return <Redirect to="/log-in" />;
-				else if (Component) return <Component {...props} />;
-				else return render(props); //We are passing this props to the component that this render function will return
+				if (Component) return <Component {...props} />;
+				if (render) return render(props); //We are passing this props to the component that this render function will return
 			}}
 		/>
 	);
