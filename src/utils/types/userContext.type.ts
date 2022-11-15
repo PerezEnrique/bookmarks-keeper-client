@@ -14,3 +14,7 @@ export type UserContext = {
     editBookmark(_id: string, content: BookmarkDTO): void,
     removeBookmark(_id: string): void,
 }
+
+export type UserProviderProps = {
+	children: JSX.Element | JSX.Element[]
+}

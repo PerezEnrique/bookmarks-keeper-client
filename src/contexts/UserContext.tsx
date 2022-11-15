@@ -1,15 +1,11 @@
 import React, { createContext, useState, useEffect } from "react";
 import http from "../services/httpService";
 import useErrorHandler from "../hooks/useErrorHandler";
-import { UserContext } from "../utils/types/userContext.type";
+import { UserContext, UserProviderProps } from "../utils/types/userContext.type";
 import { User, UserDTO } from "../utils/types/user.type";
 import { BookmarkDTO } from "../utils/types/bookmark.type";
 
 const UserContext = createContext<UserContext>({} as UserContext);
-
-type UserProviderProps = {
-	children: JSX.Element | JSX.Element[]
-}
 
 export function UserProvider({ children } : UserProviderProps) {
 	const [user, setUser] = useState<User | null>(null);
