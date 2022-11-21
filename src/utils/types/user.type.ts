@@ -9,4 +9,5 @@ export type User = BaseModel & {
 export type UserDTO = {
     username: string,
     password: string,
+    passwordConfirm?: string
 };

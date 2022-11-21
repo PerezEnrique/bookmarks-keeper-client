@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, FormEvent } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Container, Box, TextField, Typography, Link, Alert } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import UserContext from "../contexts/UserContext";
 import { createUser } from "../utils/validation-schemas/users-validation-schemas";
 import useJoiValidation from "../hooks/useJoiValidation";
+import { errorsObject } from "../utils/types/errors.type";
 
 export default function SignupPage() {
 	const { signup, userIsLoading, error } = useContext(UserContext);
@@ -12,9 +13,9 @@ export default function SignupPage() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [passwordConfirm, setPasswordConfirm] = useState("");
-	const [errors, setErrors] = useState(null);
+	const [errors, setErrors] = useState<errorsObject | null>(null);
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		setErrors(null);
@@ -59,7 +60,7 @@ export default function SignupPage() {
 					value={username}
 					required
 					onChange={(e) => setUsername(e.target.value)}
-					error={errors && errors.username && errors.username.length > 0} //because this component from material/ui doesn't accept truthy falsy booleans
+					error={errors != null && errors.username != undefined && errors.username.length > 0 } //!= to check for both null and undefinned since this component from material/ui doesn't accept truthy falsy booleans
 					helperText={errors && errors.username}
 					inputProps={{ maxLength: 30 }}
 					InputLabelProps={{ required: false }}
@@ -70,7 +71,7 @@ export default function SignupPage() {
 					value={password}
 					required
 					onChange={(e) => setPassword(e.target.value)}
-					error={errors && errors.password && errors.password.length > 0}
+					error={errors != null && errors.password != undefined && errors.password.length > 0 }
 					helperText={errors && errors.password}
 					inputProps={{ minLength: 5, maxLength: 1024 }}
 					InputLabelProps={{ required: false }}
@@ -81,7 +82,7 @@ export default function SignupPage() {
 					value={passwordConfirm}
 					required
 					onChange={(e) => setPasswordConfirm(e.target.value)}
-					error={errors && errors.passwordConfirm && errors.passwordConfirm.length > 0}
+					error={errors != null && errors.passwordConfirm != undefined && errors.passwordConfirm.length > 0 }
 					helperText={errors && errors.passwordConfirm}
 					inputProps={{ minLength: 5, maxLength: 1024 }}
 					InputLabelProps={{ required: false }}
