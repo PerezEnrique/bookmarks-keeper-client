@@ -8,12 +8,7 @@ export default function AuthenticationRoute({
 	render,
 	...rest
 } : RouteProps) {	
-	//We need render because is posible that this auth route needs aditional custom props
-	//render is the function you pass to render={--> (props) <--}
-	//...rest is because is possible this object might have other properties.
-
 	const { user } = useContext(UserContext);
-
 	return (
 		<Route
 			path={path}
@@ -21,7 +16,7 @@ export default function AuthenticationRoute({
 			render={(props) => {
 				if (user) return <Redirect to="/home" />;
 				if (Component) return <Component {...props} />;
-				if (render) return render(props); //We are passing this props to the component that this render function will return
+				if (render) return render(props);
 			}}
 		/>
 	);
