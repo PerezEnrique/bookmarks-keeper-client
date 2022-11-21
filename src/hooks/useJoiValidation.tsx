@@ -1,8 +1,7 @@
 import type { Schema } from "joi"; 
-import { UserDTO } from "../utils/types/user.type";
 import { errorsObject } from "../utils/types/errors.type";
 
-export default function useJoiValidation(schema: Schema, data: UserDTO) {
+export default function useJoiValidation<T>(schema: Schema, data: T) {
 	const { error } = schema.validate(data, { abortEarly: false });
 
 	if (error) {
