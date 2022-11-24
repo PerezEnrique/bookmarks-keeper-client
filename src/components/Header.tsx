@@ -9,17 +9,23 @@ import {
 	Stack,
 	Toolbar,
 	Typography,
-	ListItem,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
+
+type HeaderProps = {
+	location: Location,
+	searchText?: string,
+	handleSearch?: React.Dispatch<React.SetStateAction<string>>,
+	handleClickOnMenu?: () => void
+}
 
 export default function Header({
 	location,
 	searchText,
 	handleSearch,
 	handleClickOnMenu,
-}) {
+} : HeaderProps) {
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">
@@ -61,7 +67,7 @@ export default function Header({
 								placeholder="Search..."
 								inputProps={{ "aria-label": "search" }}
 								value={searchText}
-								onChange={(e) => handleSearch(e.target.value)}
+								onChange={(e) => handleSearch && handleSearch(e.target.value)}
 								sx={{
 									px: 1,
 									pt: 0.6,
