@@ -56,8 +56,8 @@ export default function LoginPage() {
 					value={username}
 					required
 					onChange={(e) => setUsername(e.target.value)}
-					error={errors != null && errors.username != undefined && errors.username.length > 0 } //!= to check for both null and undefinned since this component from material/ui doesn't accept truthy falsy booleans
-					helperText={errors && errors.username}
+					error={errors?.username?.length ? true : false } //this component from material/ui won't accept truthy falsy booleans
+					helperText={errors?.username}
 					inputProps={{ maxLength: 30 }}
 					InputLabelProps={{ required: false }}
 				/>
@@ -67,8 +67,8 @@ export default function LoginPage() {
 					value={password}
 					required
 					onChange={(e) => setPassword(e.target.value)}
-					error={errors != null && errors.password != undefined && errors.password.length > 0 }
-					helperText={errors && errors.password}
+					error={errors?.password?.length ? true : false } //this component from material/ui won't accept truthy falsy booleans
+					helperText={errors?.password}
 					inputProps={{ minLength: 5, maxLength: 1024 }}
 					InputLabelProps={{ required: false }}
 				/>
