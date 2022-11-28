@@ -1,5 +1,5 @@
 import type { Schema } from "joi"; 
-import { errorsObject } from "../utils/types/errors.type";
+import { errorsObject } from "../types";
 
 export default function useJoiValidation<T>(schema: Schema, data: T) {
 	const { error } = schema.validate(data, { abortEarly: false });

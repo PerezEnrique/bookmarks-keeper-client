@@ -5,8 +5,7 @@ import { LoadingButton } from "@mui/lab";
 import UserContext from "../contexts/UserContext";
 import { createUser } from "../utils/validation-schemas/users-validation-schemas";
 import useJoiValidation from "../hooks/useJoiValidation";
-import { errorsObject } from "../utils/types/errors.type";
-import { UserDTO } from "../utils/types/user.type";
+import { UserDTO, errorsObject} from "../types";
 
 export default function SignupPage() {
 	const { signup, userIsLoading, error } = useContext(UserContext);

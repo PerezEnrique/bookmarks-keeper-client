@@ -20,7 +20,8 @@ import ItemsList from "../components/ItemsList";
 import BookmarkCard from "../components/BookmarkCard";
 import Header from "../components/Header";
 import NavDrawer from "../components/NavDrawer";
-import { Bookmark } from "../utils/types/bookmark.type";
+import { Bookmark } from "../types";
+
 
 export default function HomePage({ location } : {location: Location}) {
 	const { user, userIsLoading, error } = useContext(UserContext);

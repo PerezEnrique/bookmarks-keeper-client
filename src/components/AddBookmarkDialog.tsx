@@ -14,8 +14,7 @@ import { LoadingButton } from "@mui/lab";
 import UserContext from "../contexts/UserContext";
 import useJoiValidation from "../hooks/useJoiValidation";
 import { addBookmark as addBookmarkSchema } from "../utils/validation-schemas/bookmarks-validation-schemas";
-import { BookmarkDTO } from "../utils/types/bookmark.type";
-import { errorsObject } from "../utils/types/errors.type";
+import { BookmarkDTO, errorsObject } from "../types";
 
 type AddBookmarkDialogProps = {
 	open: boolean,
