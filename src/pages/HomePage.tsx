@@ -20,14 +20,15 @@ import ItemsList from "../components/ItemsList";
 import BookmarkCard from "../components/BookmarkCard";
 import Header from "../components/Header";
 import NavDrawer from "../components/NavDrawer";
+import { Bookmark } from "../utils/types/bookmark.type";
 
-export default function HomePage({ location }) {
+export default function HomePage({ location } : {location: Location}) {
 	const { user, userIsLoading, error } = useContext(UserContext);
-	const { username, bookmarks } = user;
+	const { username, bookmarks } = user!; //Since this is a protected route user will never be null here
 
-	const [itemsToDisplay, setItemsToDisplay] = useState([]);
+	const [itemsToDisplay, setItemsToDisplay] = useState<Bookmark[]>([]);
 	const [searchText, setSearchText] = useState("");
-	const [filterTags, setFilterTags] = useState([]);
+	const [filterTags, setFilterTags] = useState<string[]>([]);
 	const [addModal, setAddModal] = useState(false);
 	const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -35,7 +36,7 @@ export default function HomePage({ location }) {
 		setDrawerOpen(!drawerOpen);
 	};
 
-	const handleClickOnTag = (tag) => {
+	const handleClickOnTag = (tag: string) => {
 		const tagsArray = [...filterTags];
 
 		if (tagsArray.includes(tag)) return;
@@ -44,7 +45,7 @@ export default function HomePage({ location }) {
 		setFilterTags(tagsArray);
 	};
 
-	const handleDeleteTagFilter = (tag) => {
+	const handleDeleteTagFilter = (tag: string) => {
 		const tagsArray = filterTags.filter((elem) => elem !== tag);
 		setFilterTags(tagsArray);
 	};
@@ -161,7 +162,7 @@ export default function HomePage({ location }) {
 				>
 					<Grid container spacing={2}>
 						{itemsToDisplay.map((bookmark) => (
-							<Grid item key={bookmark._id} item xs={12} md={6} lg={4}>
+							<Grid item key={bookmark._id} xs={12} md={6} lg={4}>
 								<BookmarkCard bookmark={bookmark} handleClickOnTag={handleClickOnTag} />
 							</Grid>
 						))}
