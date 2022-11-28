@@ -1,4 +1,4 @@
-import Joi from "joi-browser";
+import Joi from "joi";
 
 export const addBookmark = Joi.object({
 	name: Joi.string().max(50).required(),
