@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
 import http from "../services/httpService";
-import useErrorHandler from "../hooks/useErrorHandler";
 import { UserContext, BookmarkDTO, User, UserDTO} from "../types";
 
 const UserContext = createContext<UserContext>({} as UserContext);
@@ -52,7 +51,7 @@ export function UserProvider({ children } : UserProviderProps) {
 			setUser(data);
 			setUserIsloading(false);
 		} catch (err) {
-			setError(useErrorHandler(err));
+			setError(http.handleError(err));
 			setUserIsloading(false);
 		}
 	};
@@ -67,7 +66,7 @@ export function UserProvider({ children } : UserProviderProps) {
 			setUser(data);
 			setUserIsloading(false);
 		} catch (err) {
-			setError(useErrorHandler(err));
+			setError(http.handleError(err));
 			setUserIsloading(false);
 		}
 	};
@@ -83,7 +82,7 @@ export function UserProvider({ children } : UserProviderProps) {
 			setUserIsloading(false);
 			setSuccessMessage("User info successfully updated");
 		} catch (err) {
-			setError(useErrorHandler(err));
+			setError(http.handleError(err));
 			setUserIsloading(false);
 		}
 	};
@@ -100,7 +99,7 @@ export function UserProvider({ children } : UserProviderProps) {
 			setUser(data);
 			setUserIsloading(false);
 		} catch (err) {
-			setError(useErrorHandler(err));
+			setError(http.handleError(err));
 			setUserIsloading(false);
 		}
 	};
@@ -113,7 +112,7 @@ export function UserProvider({ children } : UserProviderProps) {
 			setUser(data);
 			setUserIsloading(false);
 		} catch (err) {
-			setError(useErrorHandler(err));
+			setError(http.handleError(err));
 			setUserIsloading(false);
 		}
 	};
@@ -126,7 +125,7 @@ export function UserProvider({ children } : UserProviderProps) {
 			setUser(data);
 			setUserIsloading(false);
 		} catch (err) {
-			setError(useErrorHandler(err));
+			setError(http.handleError(err));
 			setUserIsloading(false);
 		}
 	};
