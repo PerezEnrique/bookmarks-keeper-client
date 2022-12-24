@@ -1,5 +1,17 @@
 import React from "react";
-export default function ItemsList({
+import { Bookmark } from "../types";
+
+type ItemsListProps<T> = {
+	totalItems: T[],
+	itemsToDisplay: T[],
+	loading: boolean,
+	onNoItem: string | JSX.Element | JSX.Element[]
+	onLoading: unknown,
+	onNoSearchResults: string | JSX.Element | JSX.Element[]
+	children: JSX.Element | JSX.Element[]
+}
+
+export default function ItemsList<T>({
 	totalItems,
 	itemsToDisplay,
 	loading,
@@ -7,7 +19,7 @@ export default function ItemsList({
 	onLoading,
 	onNoSearchResults,
 	children,
-}) {
+}: ItemsListProps<T>) {
 	return (
 		<main style={{ marginBottom: "25px" }}>
 			{loading && onLoading}

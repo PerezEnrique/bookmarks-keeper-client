@@ -131,7 +131,7 @@ export default function HomePage({ location } : {location: Location}) {
 						</Box>
 					</Box>
 				)}
-				<ItemsList
+				<ItemsList<Bookmark>
 					totalItems={bookmarks}
 					itemsToDisplay={itemsToDisplay}
 					loading={userIsLoading}
