@@ -25,6 +25,8 @@ them by category. That's why I decided to build my own bookmark keeper
 app. For that, I used the MERN stack, but divided the project in [API](https://github.com/PerezEnrique/bookmarks-keeper-api) and
 client.
 
+Update: I recently migrate this project to typescript! Give it a look
+
 ### Frontend key features
 
 - Users can add, edit and remove their bookmarks.
@@ -34,6 +36,7 @@ client.
 
 ### Technologies
 
+- Typescript
 - React.js
 - Material UI
 - Webpack
