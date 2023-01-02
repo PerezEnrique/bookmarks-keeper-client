@@ -6,7 +6,7 @@ export default function LogoutPage() {
 
 	useEffect(() => {
 		logout();
-		window.location = "/";
+		window.location.href = "/";
 	}, []);
 
 	return null;

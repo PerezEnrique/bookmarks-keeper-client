@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { MouseEventHandler, useContext, useState, FormEvent } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
 	Alert,
@@ -13,22 +13,31 @@ import {
 import UserContext from "../contexts/UserContext";
 import useJoiValidation from "../hooks/useJoiValidation";
 import { editBookmark as editBookmarkSchema } from "../utils/validation-schemas/bookmarks-validation-schemas";
+import { BookmarkDTO, errorsObject } from "../types";
+
+type EditBookmarkDialogProps = {
+	_id: string,
+	currentData: BookmarkDTO,
+	open: boolean,
+	handleClose: () => void
+}
 
 export default function EditBookmarkDialog({
-	currentData: { _id, url: currentUrl, name: currentName, tags: currentTags },
+	_id,
+	currentData: { url: currentUrl, name: currentName, tags: currentTags },
 	open,
 	handleClose,
-}) {
+}: EditBookmarkDialogProps) {
 	const { editBookmark, error } = useContext(UserContext);
 
 	const [url, setUrl] = useState(currentUrl);
 	const [name, setName] = useState(currentName);
-	const [tags, setTags] = useState(currentTags);
+	const [tags, setTags] = useState<string[]>(currentTags);
 	const [newTag, setNewTag] = useState("");
-	const [errors, setErrors] = useState(null);
+	const [errors, setErrors] = useState<errorsObject | null>(null);
 
 	//to add the new tag when user press enter
-	const handleAddTag = (e) => {
+	const handleAddTag: MouseEventHandler = (e) => {
 		const currentErrors = { ...errors };
 		delete currentErrors.tags;
 		setErrors(currentErrors);
@@ -60,13 +69,13 @@ export default function EditBookmarkDialog({
 		setNewTag("");
 	};
 
-	const handleTagDelete = (tag) => {
+	const handleTagDelete = (tag: string) => {
 		const tagsArray = tags.filter((elem) => elem !== tag);
 		setTags(tagsArray);
 		setNewTag("");
 	};
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const validationErrors = useJoiValidation(editBookmarkSchema, { url, name, tags });
@@ -107,14 +116,14 @@ export default function EditBookmarkDialog({
 						label="url"
 						value={url}
 						onChange={(e) => setUrl(e.target.value)}
-						error={errors && errors.url && errors.url.length > 0}
+						error={errors?.url?.length ? true : false } //this component from material/ui won't accept truthy falsy booleans
 						helperText={errors && errors.url}
 					></TextField>
 					<TextField
 						label="name"
 						value={name}
 						onChange={(e) => setName(e.target.value)}
-						error={errors && errors.name && errors.name.length > 0}
+						error={errors?.name?.length ? true : false } //this component from material/ui won't accept truthy falsy booleans
 						helperText={errors && errors.name}
 						inputProps={{ maxLength: 50 }}
 					></TextField>
@@ -124,8 +133,7 @@ export default function EditBookmarkDialog({
 							label="tags"
 							value={newTag}
 							onChange={(e) => setNewTag(e.target.value)}
-							helperText="Add a tag and press enter"
-							error={errors && errors.tags && errors.tags.length > 0}
+							error={errors?.tags?.length ? true : false } //this component from material/ui won't accept truthy falsy booleans
 							helperText={errors && errors.tags}
 							inputProps={{ maxLength: 50 }}
 						></TextField>

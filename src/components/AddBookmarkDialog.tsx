@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, FormEvent, MouseEventHandler } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
 	Alert,
@@ -14,18 +14,24 @@ import { LoadingButton } from "@mui/lab";
 import UserContext from "../contexts/UserContext";
 import useJoiValidation from "../hooks/useJoiValidation";
 import { addBookmark as addBookmarkSchema } from "../utils/validation-schemas/bookmarks-validation-schemas";
+import { BookmarkDTO, errorsObject } from "../types";
 
-export default function AddBookmarkDialog({ open, handleClose }) {
+type AddBookmarkDialogProps = {
+	open: boolean,
+	handleClose: () => void
+}
+
+export default function AddBookmarkDialog({ open, handleClose }: AddBookmarkDialogProps) {
 	const { addBookmark, userIsLoading, error } = useContext(UserContext);
 
 	const [url, setUrl] = useState("");
 	const [name, setName] = useState("");
-	const [tags, setTags] = useState([]);
+	const [tags, setTags] = useState<string[]>([]);
 	const [newTag, setNewTag] = useState("");
-	const [errors, setErrors] = useState(null);
+	const [errors, setErrors] = useState<errorsObject | null>(null);
 
 	//to add the new tag when user press enter
-	const handleAddTag = (e) => {
+	const handleAddTag: MouseEventHandler = (e) => {
 		const currentErrors = { ...errors };
 		delete currentErrors.tags;
 		setErrors(currentErrors);
@@ -57,16 +63,16 @@ export default function AddBookmarkDialog({ open, handleClose }) {
 		setNewTag("");
 	};
 
-	const handleTagDelete = (tag) => {
+	const handleTagDelete = (tag: string) => {
 		const tagsArray = tags.filter((elem) => elem !== tag);
 		setTags(tagsArray);
 		setNewTag("");
 	};
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		const validationErrors = useJoiValidation(addBookmarkSchema, { url, name, tags });
+		const validationErrors = useJoiValidation<BookmarkDTO>(addBookmarkSchema, { url, name, tags });
 		if (validationErrors) {
 			setErrors(validationErrors);
 			return;
@@ -110,8 +116,8 @@ export default function AddBookmarkDialog({ open, handleClose }) {
 						value={url}
 						required
 						onChange={(e) => setUrl(e.target.value)}
-						error={errors && errors.url && errors.url.length > 0}
-						helperText={errors && errors.url}
+						error={errors?.url?.length ? true : false } //this component from material/ui won't accept truthy falsy booleans
+						helperText={errors?.url}
 						InputLabelProps={{ required: false }}
 					></TextField>
 					<TextField
@@ -119,8 +125,8 @@ export default function AddBookmarkDialog({ open, handleClose }) {
 						value={name}
 						required
 						onChange={(e) => setName(e.target.value)}
-						error={errors && errors.name && errors.name.length > 0}
-						helperText={errors && errors.name}
+						error={errors?.name?.length ? true : false } //this component from material/ui won't accept truthy falsy booleans
+						helperText={errors?.name}
 						inputProps={{ maxLength: 50 }}
 						InputLabelProps={{ required: false }}
 					></TextField>
@@ -130,9 +136,8 @@ export default function AddBookmarkDialog({ open, handleClose }) {
 							label="tags"
 							value={newTag}
 							onChange={(e) => setNewTag(e.target.value)}
-							helperText="Add a tag and press enter"
-							error={errors && errors.tags && errors.tags.length > 0}
-							helperText={errors && errors.tags}
+							error={errors?.tags?.length ? true : false } //this component from material/ui won't accept truthy falsy booleans
+							helperText={errors?.tags}
 							inputProps={{ maxLength: 50 }}
 						></TextField>
 						<Button variant="contained" onClick={handleAddTag}>

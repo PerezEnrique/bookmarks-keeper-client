@@ -1,21 +1,22 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, FormEvent } from "react";
 import { Alert, Box, CssBaseline, Container, TextField, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import UserContext from "../contexts/UserContext";
 import Header from "../components/Header";
 import { updateUser as updateUserSchema } from "../utils/validation-schemas/users-validation-schemas";
 import useJoiValidation from "../hooks/useJoiValidation";
+import { errorsObject } from "../types";
 
 export default function ProfilePage() {
 	const { user, updateUser, userIsLoading, successMessage, error } =
 		useContext(UserContext);
 
-	const [username, setUsername] = useState(user.username);
+	const [username, setUsername] = useState(user?.username ?? "");
 	const [password, setPassword] = useState("");
 	const [passwordConfirm, setPasswordConfirm] = useState("");
-	const [errors, setErrors] = useState(null);
+	const [errors, setErrors] = useState<errorsObject | null>(null);
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		setErrors(null);
@@ -68,8 +69,8 @@ export default function ProfilePage() {
 						label="username"
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
-						error={errors && errors.username && errors.username.length > 0} //because this component from material/ui doesn't accept truthy falsy booleans
-						helperText={errors && errors.username}
+						error={errors?.username?.length ? true : false } //this component from material/ui won't accept truthy falsy booleans
+						helperText={errors?.username}
 						inputProps={{ maxLength: 30 }}
 					/>
 					<TextField
@@ -77,8 +78,8 @@ export default function ProfilePage() {
 						type="password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
-						error={errors && errors.password && errors.password.length > 0}
-						helperText={errors && errors.password}
+						error={errors?.password?.length ? true : false }
+						helperText={errors?.password}
 						inputProps={{ minLength: 5, maxLength: 1024 }}
 					/>
 					<TextField
@@ -86,8 +87,8 @@ export default function ProfilePage() {
 						type="password"
 						value={passwordConfirm}
 						onChange={(e) => setPasswordConfirm(e.target.value)}
-						error={errors && errors.passwordConfirm && errors.passwordConfirm.length > 0}
-						helperText={errors && errors.passwordConfirm}
+						error={errors?.passwordConfirm?.length ? true : false }
+						helperText={errors?.passwordConfirm}
 						inputProps={{ minLength: 5, maxLength: 1024 }}
 					/>
 					<LoadingButton loading={userIsLoading} type="submit" variant="contained">

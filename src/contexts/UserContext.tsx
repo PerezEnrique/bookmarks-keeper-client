@@ -1,14 +1,18 @@
 import React, { createContext, useState, useEffect } from "react";
 import http from "../services/httpService";
-import useErrorHandler from "../hooks/useErrorHandler";
+import { UserContext, BookmarkDTO, User, UserDTO} from "../types";
 
-const UserContext = createContext();
+const UserContext = createContext<UserContext>({} as UserContext);
 
-export function UserProvider({ children }) {
-	const [user, setUser] = useState(null);
+export type UserProviderProps = {
+	children: JSX.Element | JSX.Element[]
+}
+
+export function UserProvider({ children } : UserProviderProps) {
+	const [user, setUser] = useState<User | null>(null);
 	const [userIsLoading, setUserIsloading] = useState(false);
-	const [successMessage, setSuccessMessage] = useState("");
-	const [error, setError] = useState(null);
+	const [successMessage, setSuccessMessage] = useState<string | null>(null);
+	const [error, setError] = useState<string | null>(null);
 
 	const tokenKey = "auth-token";
 
@@ -37,7 +41,7 @@ export function UserProvider({ children }) {
 		return localStorage.getItem(tokenKey);
 	};
 
-	const signup = async function (credentials) {
+	const signup = async function (credentials: UserDTO) {
 		try {
 			setError(null);
 			setUserIsloading(true);
@@ -47,12 +51,12 @@ export function UserProvider({ children }) {
 			setUser(data);
 			setUserIsloading(false);
 		} catch (err) {
-			setError(useErrorHandler(err));
+			setError(http.handleError(err));
 			setUserIsloading(false);
 		}
 	};
 
-	const login = async function (credentials) {
+	const login = async function (credentials: UserDTO) {
 		try {
 			setError(null);
 			setUserIsloading(true);
@@ -62,12 +66,12 @@ export function UserProvider({ children }) {
 			setUser(data);
 			setUserIsloading(false);
 		} catch (err) {
-			setError(useErrorHandler(err));
+			setError(http.handleError(err));
 			setUserIsloading(false);
 		}
 	};
 
-	const updateUser = async function (content) {
+	const updateUser = async function (content: UserDTO) {
 		try {
 			setError(null);
 			setUserIsloading(true);
@@ -78,7 +82,7 @@ export function UserProvider({ children }) {
 			setUserIsloading(false);
 			setSuccessMessage("User info successfully updated");
 		} catch (err) {
-			setError(useErrorHandler(err));
+			setError(http.handleError(err));
 			setUserIsloading(false);
 		}
 	};
@@ -87,7 +91,7 @@ export function UserProvider({ children }) {
 		localStorage.removeItem(tokenKey);
 	};
 
-	const addBookmark = async function (content) {
+	const addBookmark = async function (content: BookmarkDTO) {
 		try {
 			setError(null);
 			setUserIsloading(true);
@@ -95,12 +99,12 @@ export function UserProvider({ children }) {
 			setUser(data);
 			setUserIsloading(false);
 		} catch (err) {
-			setError(useErrorHandler(err));
+			setError(http.handleError(err));
 			setUserIsloading(false);
 		}
 	};
 
-	const editBookmark = async function (_id, content) {
+	const editBookmark = async function (_id: string, content: BookmarkDTO) {
 		try {
 			setError(null);
 			setUserIsloading(true);
@@ -108,12 +112,12 @@ export function UserProvider({ children }) {
 			setUser(data);
 			setUserIsloading(false);
 		} catch (err) {
-			setError(useErrorHandler(err));
+			setError(http.handleError(err));
 			setUserIsloading(false);
 		}
 	};
 
-	const removeBookmark = async function (_id) {
+	const removeBookmark = async function (_id: string) {
 		try {
 			setError(null);
 			setUserIsloading(true);
@@ -121,7 +125,7 @@ export function UserProvider({ children }) {
 			setUser(data);
 			setUserIsloading(false);
 		} catch (err) {
-			setError(useErrorHandler(err));
+			setError(http.handleError(err));
 			setUserIsloading(false);
 		}
 	};

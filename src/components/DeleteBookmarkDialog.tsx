@@ -9,15 +9,23 @@ import {
 } from "@mui/material";
 import UserContext from "../contexts/UserContext";
 
+type DeleteBookmarkDialogProps = {
+	bookmarkId: string,
+	bookmarkName: string,
+	open: boolean,
+	handleClose: () => void
+}
+
 export default function DeleteBookmarkDialog({
 	bookmarkId,
 	bookmarkName,
 	open,
 	handleClose,
-}) {
+}: DeleteBookmarkDialogProps) {
+
 	const { removeBookmark } = useContext(UserContext);
 
-	const handleDelete = async (_id) => {
+	const handleDelete = async (_id: string) => {
 		await removeBookmark(_id);
 	};
 

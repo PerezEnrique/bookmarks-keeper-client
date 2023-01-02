@@ -11,7 +11,7 @@ module.exports = merge(common, {
 	devtool: "eval-source-map",
 	plugins: [
 		new DefinePlugin({
-			API_URL: JSON.stringify("http://localhost:5000/api"),
+			API_URL: JSON.stringify("http://localhost:8080/api"),
 		}),
 	],
 });

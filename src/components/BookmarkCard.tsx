@@ -8,19 +8,24 @@ import {
 	IconButton,
 	Chip,
 	Link,
-	Typography,
-	Stack,
+	Typography,	
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import { v4 as uuidv4 } from "uuid";
 import EditBookmarkDialog from "./EditBookmarkDialog";
 import DeleteBookmarkDialog from "./DeleteBookmarkDialog";
-import noImage from "../assets/images/no-image.jpg";
+import { Bookmark } from "../types";
+
+type BookmarkCardProps = {
+	bookmark: Bookmark,
+	handleClickOnTag: (tag: string) => void
+}
 
 export default function BookmarkCard({
 	bookmark: { _id, url, imageUrl, title, name, description, tags },
 	handleClickOnTag,
-}) {
+} : BookmarkCardProps) {
+	
 	const [editModal, setEditModal] = useState(false);
 	const [deleteModal, setDeleteModal] = useState(false);
 
@@ -58,7 +63,7 @@ export default function BookmarkCard({
 				}}
 			>
 				<CardContent sx={{ padding: 0 }}>
-					<Typography component="h4" variant="h7">
+					<Typography component="h4" variant="h6">
 						{title}
 					</Typography>
 					<Typography color="text.secondary" fontSize="0.9rem">
@@ -67,7 +72,7 @@ export default function BookmarkCard({
 				</CardContent>
 				<CardMedia
 					component="img"
-					image={!imageUrl || imageUrl === "not available" ? noImage : imageUrl}
+					image={!imageUrl || imageUrl === "not available" ? require("../assets/images/no-image.jpg") : imageUrl}
 					alt={`${name} url preview`}
 					sx={{ display: "block", maxWidth: "100%", maxHeight: 215 }}
 				/>
@@ -89,7 +94,8 @@ export default function BookmarkCard({
 				</IconButton>
 			</CardActions>
 			<EditBookmarkDialog
-				currentData={{ _id, url, name, tags }}
+				_id={_id}
+				currentData={{url, name, tags }}
 				open={editModal}
 				handleClose={() => setEditModal(false)}
 			/>

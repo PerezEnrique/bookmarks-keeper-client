@@ -1,41 +1,37 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, FormEvent } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { Container, Box, TextField, Typography, Link, Alert } from "@mui/material";
+import { Container, Box, TextField, Typography, Alert, Link } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import UserContext from "../contexts/UserContext";
-import { createUser } from "../utils/validation-schemas/users-validation-schemas";
+import { logUserIn as logUserInSchema } from "../utils/validation-schemas/users-validation-schemas";
 import useJoiValidation from "../hooks/useJoiValidation";
+import { UserDTO, errorsObject} from "../types";
 
-export default function SignupPage() {
-	const { signup, userIsLoading, error } = useContext(UserContext);
+export default function LoginPage() {
+	const { login, userIsLoading, error } = useContext(UserContext);
 
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const [passwordConfirm, setPasswordConfirm] = useState("");
-	const [errors, setErrors] = useState(null);
+	const [errors, setErrors] = useState<errorsObject | null>(null);
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		setErrors(null);
 
-		const validationErrors = useJoiValidation(createUser, {
-			username,
-			password,
-			passwordConfirm,
-		});
+		const validationErrors = useJoiValidation<UserDTO>(logUserInSchema, { username, password });
 		if (validationErrors) {
 			setErrors(validationErrors);
 			return;
 		}
 
-		await signup({ username, password });
+		await login({ username, password });
 	};
 
 	return (
 		<Container component="main" maxWidth="xs" sx={{ mt: 10 }}>
 			<Typography component="h1" variant="h3" align="center" mb={3}>
-				Sign up
+				Log in
 			</Typography>
 			{error && (
 				<Alert severity="error" sx={{ mb: 1 }}>
@@ -59,8 +55,8 @@ export default function SignupPage() {
 					value={username}
 					required
 					onChange={(e) => setUsername(e.target.value)}
-					error={errors && errors.username && errors.username.length > 0} //because this component from material/ui doesn't accept truthy falsy booleans
-					helperText={errors && errors.username}
+					error={errors?.username?.length ? true : false } //this component from material/ui won't accept truthy falsy booleans
+					helperText={errors?.username}
 					inputProps={{ maxLength: 30 }}
 					InputLabelProps={{ required: false }}
 				/>
@@ -70,19 +66,8 @@ export default function SignupPage() {
 					value={password}
 					required
 					onChange={(e) => setPassword(e.target.value)}
-					error={errors && errors.password && errors.password.length > 0}
-					helperText={errors && errors.password}
-					inputProps={{ minLength: 5, maxLength: 1024 }}
-					InputLabelProps={{ required: false }}
-				/>
-				<TextField
-					label="confirm password"
-					type="password"
-					value={passwordConfirm}
-					required
-					onChange={(e) => setPasswordConfirm(e.target.value)}
-					error={errors && errors.passwordConfirm && errors.passwordConfirm.length > 0}
-					helperText={errors && errors.passwordConfirm}
+					error={errors?.password?.length ? true : false } //this component from material/ui won't accept truthy falsy booleans
+					helperText={errors?.password}
 					inputProps={{ minLength: 5, maxLength: 1024 }}
 					InputLabelProps={{ required: false }}
 				/>
@@ -91,9 +76,9 @@ export default function SignupPage() {
 				</LoadingButton>
 			</Box>
 			<Typography align="center">
-				Already have an account?{" "}
-				<Link to="/log-in" component={RouterLink}>
-					Log in
+				Don't have an account?{" "}
+				<Link to="/sign-up" component={RouterLink}>
+					Sign up
 				</Link>
 			</Typography>
 		</Container>
