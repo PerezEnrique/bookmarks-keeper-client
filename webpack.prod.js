@@ -14,7 +14,7 @@ module.exports = merge(common, {
 	},
 	plugins: [
 		new DefinePlugin({
-			API_URL: JSON.stringify("bookmarks-keeper-api.up.railway.app/api"),
+			API_URL: JSON.stringify("https://bookmarks-keeper-api.up.railway.app/api"),
 		}),
 		new CopyPlugin({
 			patterns: [
