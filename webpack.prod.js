@@ -14,7 +14,7 @@ module.exports = merge(common, {
 	},
 	plugins: [
 		new DefinePlugin({
-			API_URL: JSON.stringify("https://bookmark-keeper-api.herokuapp.com/api"),
+			API_URL: JSON.stringify("bookmarks-keeper-api.up.railway.app/api"),
 		}),
 		new CopyPlugin({
 			patterns: [
