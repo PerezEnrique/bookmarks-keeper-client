@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect } from "react";
 import http from "../services/httpService";
-import { UserContext, BookmarkDTO, User, UserDTO} from "../types";
+import { UserContext } from "../utils/types";
+import User from "../domain/User";
+import { bookmarkInputDto, userCredentialsDto } from "../utils/dtos";
 
 const UserContext = createContext<UserContext>({} as UserContext);
 
@@ -41,7 +43,7 @@ export function UserProvider({ children } : UserProviderProps) {
 		return localStorage.getItem(tokenKey);
 	};
 
-	const signup = async function (credentials: UserDTO) {
+	const signup = async function (credentials: userCredentialsDto) {
 		try {
 			setError(null);
 			setUserIsloading(true);
@@ -56,7 +58,7 @@ export function UserProvider({ children } : UserProviderProps) {
 		}
 	};
 
-	const login = async function (credentials: UserDTO) {
+	const login = async function (credentials: userCredentialsDto) {
 		try {
 			setError(null);
 			setUserIsloading(true);
@@ -71,7 +73,7 @@ export function UserProvider({ children } : UserProviderProps) {
 		}
 	};
 
-	const updateUser = async function (content: UserDTO) {
+	const updateUser = async function (content: userCredentialsDto) {
 		try {
 			setError(null);
 			setUserIsloading(true);
@@ -91,7 +93,7 @@ export function UserProvider({ children } : UserProviderProps) {
 		localStorage.removeItem(tokenKey);
 	};
 
-	const addBookmark = async function (content: BookmarkDTO) {
+	const addBookmark = async function (content: bookmarkInputDto) {
 		try {
 			setError(null);
 			setUserIsloading(true);
@@ -104,11 +106,11 @@ export function UserProvider({ children } : UserProviderProps) {
 		}
 	};
 
-	const editBookmark = async function (_id: string, content: BookmarkDTO) {
+	const editBookmark = async function (id: string, content: bookmarkInputDto) {
 		try {
 			setError(null);
 			setUserIsloading(true);
-			const { data } = await http.put(`/users/bookmarks/${_id}`, content);
+			const { data } = await http.put(`/users/bookmarks/${id}`, content);
 			setUser(data);
 			setUserIsloading(false);
 		} catch (err) {
@@ -117,11 +119,11 @@ export function UserProvider({ children } : UserProviderProps) {
 		}
 	};
 
-	const removeBookmark = async function (_id: string) {
+	const removeBookmark = async function (id: string) {
 		try {
 			setError(null);
 			setUserIsloading(true);
-			const { data } = await http.delete(`/users/bookmarks/${_id}`);
+			const { data } = await http.delete(`/users/bookmarks/${id}`);
 			setUser(data);
 			setUserIsloading(false);
 		} catch (err) {

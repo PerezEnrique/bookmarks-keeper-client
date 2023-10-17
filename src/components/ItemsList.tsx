@@ -1,5 +1,4 @@
 import React from "react";
-import { Bookmark } from "../types";
 
 type ItemsListProps<T> = {
 	totalItems: T[],

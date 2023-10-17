@@ -5,7 +5,7 @@ import UserContext from "../contexts/UserContext";
 import Header from "../components/Header";
 import { updateUser as updateUserSchema } from "../utils/validation-schemas/users-validation-schemas";
 import useJoiValidation from "../hooks/useJoiValidation";
-import { errorsObject } from "../types";
+import { errorsObject } from "../utils/types";
 
 export default function ProfilePage() {
 	const { user, updateUser, userIsLoading, successMessage, error } =

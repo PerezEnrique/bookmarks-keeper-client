@@ -14,13 +14,13 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { v4 as uuidv4 } from "uuid";
+import Bookmark from "../domain/Bookmark";
 import UserContext from "../contexts/UserContext";
 import AddBookmarkDialog from "../components/AddBookmarkDialog";
 import ItemsList from "../components/ItemsList";
 import BookmarkCard from "../components/BookmarkCard";
 import Header from "../components/Header";
 import NavDrawer from "../components/NavDrawer";
-import { Bookmark } from "../types";
 
 
 export default function HomePage({ location } : {location: Location}) {
@@ -163,7 +163,7 @@ export default function HomePage({ location } : {location: Location}) {
 				>
 					<Grid container spacing={2}>
 						{itemsToDisplay.map((bookmark) => (
-							<Grid item key={bookmark._id} xs={12} md={6} lg={4}>
+							<Grid item key={bookmark.id} xs={12} md={6} lg={4}>
 								<BookmarkCard bookmark={bookmark} handleClickOnTag={handleClickOnTag} />
 							</Grid>
 						))}

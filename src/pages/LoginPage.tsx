@@ -5,7 +5,8 @@ import { LoadingButton } from "@mui/lab";
 import UserContext from "../contexts/UserContext";
 import { logUserIn as logUserInSchema } from "../utils/validation-schemas/users-validation-schemas";
 import useJoiValidation from "../hooks/useJoiValidation";
-import { UserDTO, errorsObject} from "../types";
+import { errorsObject} from "../utils/types";
+import { userCredentialsDto } from "../utils/dtos";
 
 export default function LoginPage() {
 	const { login, userIsLoading, error } = useContext(UserContext);
@@ -19,7 +20,7 @@ export default function LoginPage() {
 
 		setErrors(null);
 
-		const validationErrors = useJoiValidation<UserDTO>(logUserInSchema, { username, password });
+		const validationErrors = useJoiValidation<userCredentialsDto>(logUserInSchema, { username, password });
 		if (validationErrors) {
 			setErrors(validationErrors);
 			return;

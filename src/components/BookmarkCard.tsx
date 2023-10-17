@@ -12,9 +12,9 @@ import {
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import { v4 as uuidv4 } from "uuid";
+import Bookmark from "../domain/Bookmark";
 import EditBookmarkDialog from "./EditBookmarkDialog";
 import DeleteBookmarkDialog from "./DeleteBookmarkDialog";
-import { Bookmark } from "../types";
 
 type BookmarkCardProps = {
 	bookmark: Bookmark,
@@ -22,7 +22,7 @@ type BookmarkCardProps = {
 }
 
 export default function BookmarkCard({
-	bookmark: { _id, url, imageUrl, title, name, description, tags },
+	bookmark: { id, url, imageUrl, title, name, description, tags },
 	handleClickOnTag,
 } : BookmarkCardProps) {
 	
@@ -94,13 +94,13 @@ export default function BookmarkCard({
 				</IconButton>
 			</CardActions>
 			<EditBookmarkDialog
-				_id={_id}
+				id={id}
 				currentData={{url, name, tags }}
 				open={editModal}
 				handleClose={() => setEditModal(false)}
 			/>
 			<DeleteBookmarkDialog
-				bookmarkId={_id}
+				bookmarkId={id}
 				bookmarkName={name}
 				open={deleteModal}
 				handleClose={() => setDeleteModal(false)}
