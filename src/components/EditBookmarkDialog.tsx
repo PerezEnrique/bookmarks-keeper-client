@@ -11,9 +11,8 @@ import {
 	TextField,
 } from "@mui/material";
 import UserContext from "../contexts/UserContext";
-import useJoiValidation from "../hooks/useJoiValidation";
+import useJoiValidation, { editBookmarkSchema } from "../hooks/useJoiValidation";
 import { bookmarkInputDto } from "../utils/dtos";
-import { editBookmark as editBookmarkSchema } from "../utils/validation-schemas/bookmarks-validation-schemas";
 import { errorsObject } from "../utils/types";
 
 type EditBookmarkDialogProps = {

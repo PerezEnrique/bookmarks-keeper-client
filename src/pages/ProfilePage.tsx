@@ -3,8 +3,7 @@ import { Alert, Box, CssBaseline, Container, TextField, Typography } from "@mui/
 import { LoadingButton } from "@mui/lab";
 import UserContext from "../contexts/UserContext";
 import Header from "../components/Header";
-import { updateUser as updateUserSchema } from "../utils/validation-schemas/users-validation-schemas";
-import useJoiValidation from "../hooks/useJoiValidation";
+import useJoiValidation, { updateUserSchema } from "../hooks/useJoiValidation";
 import { errorsObject } from "../utils/types";
 
 export default function ProfilePage() {
