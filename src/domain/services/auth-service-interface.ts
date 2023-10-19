@@ -5,5 +5,6 @@ export default interface AuthServiceInterface {
     getToken() : void;
     getCurrentUser() : Promise<User | null>;
     logUserIn(user: UserCredentialsModel) : Promise<User | null>
+    logUserOut(): void
     storeToken(token: string): void
 }

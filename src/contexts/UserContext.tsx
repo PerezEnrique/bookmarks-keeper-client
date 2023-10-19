@@ -25,8 +25,6 @@ export function UserProvider({ children } : UserProviderProps) {
 	const [successMessage, setSuccessMessage] = useState<string | null>(null);
 	const [error, setError] = useState<string | null>(null);
 
-	const tokenKey = "auth-token";
-
 	//with this when we have a token in our local storage it will be send by axios in a header in future request
 	useEffect(() => {
 		httpService.setToken(authService.getToken());
@@ -88,7 +86,7 @@ export function UserProvider({ children } : UserProviderProps) {
 	};
 
 	const logout = function () {
-		localStorage.removeItem(tokenKey);
+		authService.logUserOut();
 	};
 
 	const updateUser = async function (content: userCredentialsDto) {

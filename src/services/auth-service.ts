@@ -27,6 +27,10 @@ export default class AuthService implements AuthServiceInterface {
         return data;
     }
 
+    logUserOut = (): void => {
+        localStorage.removeItem(this.tokenKey);
+    }
+
     storeToken = (token: string) : void => {
         localStorage.setItem(this.tokenKey, token);
     }
