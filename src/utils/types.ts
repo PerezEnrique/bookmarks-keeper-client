@@ -1,6 +1,9 @@
+import { AxiosResponse } from "axios"
 import BookmarkInputModel from "../domain/api-models/bookmark-input-model"
 import User from "../domain/entities/User"
 import { userCredentialsDto } from "./dtos"
+
+export type httpResponse<T, D> = AxiosResponse<T, D>
 
 export type errorsObject = {
     [key: string]: string

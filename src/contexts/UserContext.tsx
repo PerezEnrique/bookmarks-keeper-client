@@ -1,15 +1,17 @@
 import React, { createContext, useState, useEffect } from "react";
 import AuthService from "../services/auth-service";
-import http from "../services/httpService";
 import User from "../domain/entities/User";
 import { UserContext } from "../utils/types";
 import UsersService from "../services/users-service";
 import BookmarkInputModel from "../domain/api-models/bookmark-input-model";
 import { userCredentialsDto } from "../utils/dtos";
 import UserCredentialsModel from "../domain/api-models/user-credentials-model";
+import HttpService from "../services/http-service";
 
-const authService = new AuthService();
-const usersService = new UsersService(authService);
+declare const API_URL: string;
+const httpService = new HttpService<User>(API_URL);
+const authService = new AuthService(httpService);
+const usersService = new UsersService(httpService, authService);
 const UserContext = createContext<UserContext>({} as UserContext);
 
 export type UserProviderProps = {
@@ -27,7 +29,7 @@ export function UserProvider({ children } : UserProviderProps) {
 
 	//with this when we have a token in our local storage it will be send by axios in a header in future request
 	useEffect(() => {
-		http.setToken(authService.getToken());
+		httpService.setToken(authService.getToken());
 	});
 
 	//When this component is mounted it will make a request to current-user endopoint, if that request has a valid token we should get the current user
@@ -54,7 +56,7 @@ export function UserProvider({ children } : UserProviderProps) {
 			setUser(user);
 			setUserIsloading(false);
 		} catch (err) {
-			setError(http.handleError(err));
+			setError(httpService.handleError(err));
 			setUserIsloading(false);
 		}
 	};
@@ -67,7 +69,7 @@ export function UserProvider({ children } : UserProviderProps) {
 			setUser(user);
 			setUserIsloading(false);
 		} catch (err) {
-			setError(http.handleError(err));
+			setError(httpService.handleError(err));
 			setUserIsloading(false);
 		}
 	};
@@ -80,7 +82,7 @@ export function UserProvider({ children } : UserProviderProps) {
 			setUser(user);
 			setUserIsloading(false);
 		} catch (err) {
-			setError(http.handleError(err));
+			setError(httpService.handleError(err));
 			setUserIsloading(false);
 		}
 	};
@@ -98,7 +100,7 @@ export function UserProvider({ children } : UserProviderProps) {
 			setUserIsloading(false);
 			setSuccessMessage("User info successfully updated");
 		} catch (err) {
-			setError(http.handleError(err));
+			setError(httpService.handleError(err));
 			setUserIsloading(false);
 		}
 	};
@@ -111,7 +113,7 @@ export function UserProvider({ children } : UserProviderProps) {
 			setUser(user);
 			setUserIsloading(false);
 		} catch (err) {
-			setError(http.handleError(err));
+			setError(httpService.handleError(err));
 			setUserIsloading(false);
 		}
 	};
@@ -124,7 +126,7 @@ export function UserProvider({ children } : UserProviderProps) {
 			setUser(user);
 			setUserIsloading(false);
 		} catch (err) {
-			setError(http.handleError(err));
+			setError(httpService.handleError(err));
 			setUserIsloading(false);
 		}
 	};
