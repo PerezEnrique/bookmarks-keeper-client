@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { v4 as uuidv4 } from "uuid";
-import Bookmark from "../domain/Bookmark";
+import Bookmark from "../domain/entities/Bookmark";
 import UserContext from "../contexts/UserContext";
 import AddBookmarkDialog from "../components/AddBookmarkDialog";
 import ItemsList from "../components/ItemsList";

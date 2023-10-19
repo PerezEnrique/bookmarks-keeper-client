@@ -1,14 +1,5 @@
-import Bookmark from "../domain/Bookmark";
-import User from "../domain/User";
+import UserCredentialsModel from "../domain/api-models/user-credentials-model";
 
-export type bookmarkInputDto = Omit<Bookmark, "id" | "createdAt" | "description" | "imageUrl" | "title" >;
-
-export type bookmarkDto = Bookmark;
-
-export type userCredentialsDto = {
-    username: string;
-    password: string,
+export type userCredentialsDto = UserCredentialsModel & {
     passwordConfirm?: string
-  }
-
-export type userDto = User;
+}

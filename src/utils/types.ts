@@ -1,5 +1,6 @@
-import User from "../domain/User"
-import { bookmarkInputDto, userCredentialsDto} from "./dtos"
+import BookmarkInputModel from "../domain/api-models/bookmark-input-model"
+import User from "../domain/entities/User"
+import { userCredentialsDto } from "./dtos"
 
 export type errorsObject = {
     [key: string]: string
@@ -14,7 +15,7 @@ export type UserContext = {
     login(credentials: userCredentialsDto): void,
     updateUser(content: userCredentialsDto): void,
     logout(): void,
-    addBookmark(content: bookmarkInputDto): void,
-    editBookmark(_id: string, content: bookmarkInputDto): void,
+    addBookmark(content: BookmarkInputModel): void,
+    editBookmark(_id: string, content: BookmarkInputModel): void,
     removeBookmark(_id: string): void,
 }

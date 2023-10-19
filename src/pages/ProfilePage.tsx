@@ -5,6 +5,7 @@ import UserContext from "../contexts/UserContext";
 import Header from "../components/Header";
 import useJoiValidation, { updateUserSchema } from "../hooks/useJoiValidation";
 import { errorsObject } from "../utils/types";
+import { userCredentialsDto } from "../utils/dtos";
 
 export default function ProfilePage() {
 	const { user, updateUser, userIsLoading, successMessage, error } =
@@ -20,7 +21,7 @@ export default function ProfilePage() {
 
 		setErrors(null);
 
-		const validationErrors = useJoiValidation(updateUserSchema, {
+		const validationErrors = useJoiValidation<userCredentialsDto>(updateUserSchema, {
 			username,
 			password,
 			passwordConfirm,

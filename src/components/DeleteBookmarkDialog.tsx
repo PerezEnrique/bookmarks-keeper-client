@@ -25,8 +25,8 @@ export default function DeleteBookmarkDialog({
 
 	const { removeBookmark } = useContext(UserContext);
 
-	const handleDelete = async (_id: string) => {
-		await removeBookmark(_id);
+	const handleDelete = async (id: string) => {
+		await removeBookmark(id);
 	};
 
 	return (

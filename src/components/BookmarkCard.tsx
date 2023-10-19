@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import { v4 as uuidv4 } from "uuid";
-import Bookmark from "../domain/Bookmark";
+import Bookmark from "../domain/entities/Bookmark";
 import EditBookmarkDialog from "./EditBookmarkDialog";
 import DeleteBookmarkDialog from "./DeleteBookmarkDialog";
 
@@ -25,7 +25,7 @@ export default function BookmarkCard({
 	bookmark: { id, url, imageUrl, title, name, description, tags },
 	handleClickOnTag,
 } : BookmarkCardProps) {
-	
+
 	const [editModal, setEditModal] = useState(false);
 	const [deleteModal, setDeleteModal] = useState(false);
 

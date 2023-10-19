@@ -12,12 +12,12 @@ import {
 } from "@mui/material";
 import UserContext from "../contexts/UserContext";
 import useJoiValidation, { editBookmarkSchema } from "../hooks/useJoiValidation";
-import { bookmarkInputDto } from "../utils/dtos";
 import { errorsObject } from "../utils/types";
+import BookmarkInputModel from "../domain/api-models/bookmark-input-model";
 
 type EditBookmarkDialogProps = {
 	id: string,
-	currentData: bookmarkInputDto,
+	currentData: BookmarkInputModel,
 	open: boolean,
 	handleClose: () => void
 }
