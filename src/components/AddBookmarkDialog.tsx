@@ -12,9 +12,8 @@ import {
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import UserContext from "../contexts/UserContext";
-import useJoiValidation from "../hooks/useJoiValidation";
-import { addBookmark as addBookmarkSchema } from "../utils/validation-schemas/bookmarks-validation-schemas";
-import { BookmarkDTO, errorsObject } from "../types";
+import useJoiValidation, { addBookmarkSchema } from "../hooks/useJoiValidation";
+import { errorsObject } from "../utils/types";
 
 type AddBookmarkDialogProps = {
 	open: boolean,
@@ -72,7 +71,7 @@ export default function AddBookmarkDialog({ open, handleClose }: AddBookmarkDial
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		const validationErrors = useJoiValidation<BookmarkDTO>(addBookmarkSchema, { url, name, tags });
+		const validationErrors = useJoiValidation(addBookmarkSchema, { url, name, tags });
 		if (validationErrors) {
 			setErrors(validationErrors);
 			return;

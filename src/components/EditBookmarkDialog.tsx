@@ -11,19 +11,19 @@ import {
 	TextField,
 } from "@mui/material";
 import UserContext from "../contexts/UserContext";
-import useJoiValidation from "../hooks/useJoiValidation";
-import { editBookmark as editBookmarkSchema } from "../utils/validation-schemas/bookmarks-validation-schemas";
-import { BookmarkDTO, errorsObject } from "../types";
+import useJoiValidation, { editBookmarkSchema } from "../hooks/useJoiValidation";
+import { errorsObject } from "../utils/types";
+import BookmarkInputModel from "../domain/api-models/bookmark-input-model";
 
 type EditBookmarkDialogProps = {
-	_id: string,
-	currentData: BookmarkDTO,
+	id: string,
+	currentData: BookmarkInputModel,
 	open: boolean,
 	handleClose: () => void
 }
 
 export default function EditBookmarkDialog({
-	_id,
+	id,
 	currentData: { url: currentUrl, name: currentName, tags: currentTags },
 	open,
 	handleClose,
@@ -84,7 +84,7 @@ export default function EditBookmarkDialog({
 			return;
 		}
 
-		await editBookmark(_id, { url, name, tags });
+		await editBookmark(id, { url, name, tags });
 	};
 
 	return (

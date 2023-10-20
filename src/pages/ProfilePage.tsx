@@ -3,9 +3,9 @@ import { Alert, Box, CssBaseline, Container, TextField, Typography } from "@mui/
 import { LoadingButton } from "@mui/lab";
 import UserContext from "../contexts/UserContext";
 import Header from "../components/Header";
-import { updateUser as updateUserSchema } from "../utils/validation-schemas/users-validation-schemas";
-import useJoiValidation from "../hooks/useJoiValidation";
-import { errorsObject } from "../types";
+import useJoiValidation, { updateUserSchema } from "../hooks/useJoiValidation";
+import { errorsObject } from "../utils/types";
+import { userCredentialsDto } from "../utils/dtos";
 
 export default function ProfilePage() {
 	const { user, updateUser, userIsLoading, successMessage, error } =
@@ -21,7 +21,7 @@ export default function ProfilePage() {
 
 		setErrors(null);
 
-		const validationErrors = useJoiValidation(updateUserSchema, {
+		const validationErrors = useJoiValidation<userCredentialsDto>(updateUserSchema, {
 			username,
 			password,
 			passwordConfirm,
@@ -37,7 +37,7 @@ export default function ProfilePage() {
 	return (
 		<React.Fragment>
 			<CssBaseline />
-			<Header location={location} />
+			<Header/>
 			<Container component="main" sx={{ mt: 6 }}>
 				<Typography component="h1" variant="h4" mb={2} sx={{ fontWeight: 700 }}>
 					Profile info
