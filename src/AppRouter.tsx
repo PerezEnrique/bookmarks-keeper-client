@@ -1,27 +1,33 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import AuthenticationRoute from "./components/AuthenticationRoute";
-import ProtectedRoute from "./components/ProtectedRoute";
+import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import SignupPage from "./pages/SignupPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import LogoutPage from "./pages/LogoutPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import ProtectedRouteWrapper from "./components/ProtectedRouteWrapper";
+import AuthenticationRouteWrapper from "./components/AuthenticationRouteWrapper";
 
 export default function AppRouter() {
-	return (
-		<Router>
-			<Switch>
-				<AuthenticationRoute path="/sign-up" component={SignupPage} />
-				<ProtectedRoute path="/profile" component={ProfilePage} />
-				<ProtectedRoute path="/home" component={HomePage} />
-				<Route path="/not-found" component={NotFoundPage} />
-				<Route path="/log-out" component={LogoutPage} />
-				<AuthenticationRoute path="/log-in" component={LoginPage} />
-				<Redirect exact from="/" to="/log-in" />
-				<Redirect to="not-found" />
-			</Switch>
-		</Router>
-	);
+  const router = createBrowserRouter([
+    {path: "/", element: <Navigate to="/home" />, errorElement: <NotFoundPage />},
+    {
+      element: <ProtectedRouteWrapper />,
+      children: [
+        { path: "home", element: <HomePage /> },
+        { path: "log-out", element: <LogoutPage /> },
+        { path: "profile", element: <ProfilePage /> },
+      ],
+    },
+    {
+      element: <AuthenticationRouteWrapper />,
+      children: [
+        { path: "log-in", element: <LoginPage /> },
+        { path: "sign-up", element: <SignupPage /> },
+      ],
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
 }

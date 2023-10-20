@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import {
 	AppBar,
 	Box,
@@ -14,18 +14,18 @@ import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 
 type HeaderProps = {
-	location: Location,
 	searchText?: string,
 	handleSearch?: React.Dispatch<React.SetStateAction<string>>,
 	handleClickOnMenu?: () => void
 }
 
 export default function Header({
-	location,
 	searchText,
 	handleSearch,
 	handleClickOnMenu,
 } : HeaderProps) {
+	const location = useLocation();
+
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">

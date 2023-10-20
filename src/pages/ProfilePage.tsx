@@ -37,7 +37,7 @@ export default function ProfilePage() {
 	return (
 		<React.Fragment>
 			<CssBaseline />
-			<Header location={location} />
+			<Header/>
 			<Container component="main" sx={{ mt: 6 }}>
 				<Typography component="h1" variant="h4" mb={2} sx={{ fontWeight: 700 }}>
 					Profile info

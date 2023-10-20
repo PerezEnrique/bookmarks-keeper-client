@@ -23,7 +23,7 @@ import Header from "../components/Header";
 import NavDrawer from "../components/NavDrawer";
 
 
-export default function HomePage({ location } : {location: Location}) {
+export default function HomePage() {
 	const { user, userIsLoading, error } = useContext(UserContext);
 	const { username, bookmarks } = user!; //Since this is a protected route user will never be null here
 
@@ -83,7 +83,6 @@ export default function HomePage({ location } : {location: Location}) {
 		<React.Fragment>
 			<CssBaseline />
 			<Header
-				location={location}
 				searchText={searchText}
 				handleSearch={setSearchText}
 				handleClickOnMenu={handleDrawerOpen}
